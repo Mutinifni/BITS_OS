@@ -1,1 +1,3 @@
 lib/kernel/initialize.o 
+lib/kernel/scrn.o
+lib/kernel/system.o 
