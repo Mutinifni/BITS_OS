@@ -1,13 +1,22 @@
-echo Assembling:
+echo Assembling...
 nasm -f elf -o start.o start.asm
 
-echo Compiling main.c:
-gcc -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I./include -c -o main.o main.c
+echo Compiling main.c...
+g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I./include -c -o main.o main.c
 
-echo Compiling scrn.c:
-gcc -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I./include -c -o scrn.o scrn.c
+echo Compiling scrn.c...
+g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/scrn.o ./include/scrn.c
 
-echo Running linker script:
-ld -m elf_i386 -T link.ld -o kernel.bin start.o main.o scrn.o
+echo Compiling memfn.c...
+g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/memfn.o ./include/memfn.c
+
+echo Compiling print.c...
+g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/print.o ./include/print.c
+
+echo Compiling gdt.c...
+g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/gdt.o ./include/gdt.c
+
+echo Running linker script...
+ld -m elf_i386 -T link.ld -o kernel.bin main.o start.o ./include/*.o
 
 echo Done!

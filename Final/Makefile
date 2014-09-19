@@ -4,13 +4,11 @@ libdir = $(current_dir)/lib/kernel/
 includedir = $(current_dir)/include/kernel/
 top_level_obj = $(shell cat top.list) 
 kernel_obj = $(shell cat kernel.list) 
-all: kernel_main.o kernel.o gdt.o start.o initialize.o scrn.o system.o 
-	ld -T  linker_script.ld -o myos.bin -O2 -nostdlib $(top_level_obj) $(kernel_obj)  -m elf_i386
-	qemu-system-i386  -kernel myos.bin
-start.o: start.asm
-	nasm -f elf -o start.o start.asm 
-gdt.o: gdt.c 
-	gcc -o gdt.o gdt.c -Wall -Werror -nostdinc -std=c99 -m32  -c
+all: kernel_main.o kernel.o gdt.o initialize.o scrn.o system.o 
+	ld -m elf_i386 -T  linker_script.ld -o myos.bin -nostdlib $(top_level_obj) $(kernel_obj) 
+	qemu-system-i386 -kernel myos.bin
+gdt.o: $(libdir)gdt.c 
+	gcc -o $(libdir)gdt.o -Werror $(libdir)gdt.c -Wall -std=c99  -nostdinc -m32 -c -I$(includedir) -fno-builtin
 system.o: $(libdir)system.c
 	gcc -o $(libdir)system.o -Werror $(libdir)system.c -Wall -std=c99  -nostdinc -m32 -c -I$(includedir) -fno-builtin
 kernel_main.o: kernel_main.c 

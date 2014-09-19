@@ -1,79 +1,73 @@
+; This is the kernel's entry point. We could either call main here,
+; or we can use this to setup the stack or other nice stuff, like
+; perhaps setting up the GDT and segments. Please note that interrupts
+; are disabled at this point: More on interrupts later!
+[BITS 32]
+global start
+start:
+    mov esp, _sys_stack     ; This points the stack to our new stack area
+    jmp stublet
 
- 	;;  This is the nasm file.
-	;;  Link  with :- ld linker_script.ld kernel_main.o kernel.o -o myKernel -m elf_i386
-; Declare constants used for creating a multiboot header.
-MBALIGN     equ  1<<0                   ; align loaded modules on page boundaries
-MEMINFO     equ  1<<1                   ; provide memory map
-FLAGS       equ  MBALIGN | MEMINFO      ; this is the Multiboot 'flag' field
-MAGIC       equ  0x1BADB002             ; 'magic number' lets bootloader find the header
-CHECKSUM    equ -(MAGIC + FLAGS)        ; checksum of above, to prove we are multiboot
- 
-; Declare a header as in the Multiboot Standard. We put this into a special
-; section so we can force the header to be in the start of the final program.
-; You don't need to understand all these details as it is just magic values that
-; is documented in the multiboot standard. The bootloader will search for this
-; magic sequence and recognize us as a multiboot kernel.
-section .multiboot
-align 4
-	dd MAGIC
-	dd FLAGS
-	dd CHECKSUM
- 
-; Currently the stack pointer register (esp) points at anything and using it may
-; cause massive harm. Instead, we'll provide our own stack. We will allocate
-; room for a small temporary stack by creating a symbol at the bottom of it,
-; then allocating 16384 bytes for it, and finally creating a symbol at the top.
-section .bootstrap_stack
-align 4
-stack_bottom:
-times 16384 db 0
-stack_top:
- 
-; The linker script specifies _start as the entry point to the kernel and the
-; bootloader will jump to this position once the kernel has been loaded. It
-; doesn't make sense to return from this function as the bootloader is gone.
-section .text
-global _start
-_start:
-	; Welcome to kernel mode! We now have sufficient code for the bootloader to
-	; load and run our operating system. It doesn't do anything interesting yet.
-	; Perhaps we would like to call printf("Hello, World\n"). You should now
-	; realize one of the profound truths about kernel mode: There is nothing
-	; there unless you provide it yourself. There is no printf function. There
-	; is no <stdio.h> header. If you want a function, you will have to code it
-	; yourself. And that is one of the best things about kernel development:
-	; you get to make the entire system yourself. You have absolute and complete
-	; power over the machine, there are no security restrictions, no safe
-	; guards, no debugging mechanisms, there is nothing but what you build.
- 
-	; By now, you are perhaps tired of assembly language. You realize some
-	; things simply cannot be done in C, such as making the multiboot header in
-	; the right section and setting up the stack. However, you would like to
-	; write the operating system in a higher level language, such as C or C++.
-	; To that end, the next task is preparing the processor for execution of
-	; such code. C doesn't expect much at this point and we only need to set up
-	; a stack. Note that the processor is not fully initialized yet and stuff
-	; such as floating point instructions are not available yet.
- 
-	; To set up a stack, we simply set the esp register to point to the top of
-	; our stack (as it grows downwards).
-	mov esp, stack_top
- 
-	; We are now ready to actually execute C code. We cannot embed that in an
-	; assembly file, so we'll create a kernel.c file in a moment. In that file,
-	; we'll create a C entry point called kernel_main and call it here.
-	extern kernel_main
-	call kernel_main
- 
-	; In case the function returns, we'll want to put the computer into an
-	; infinite loop. To do that, we use the clear interrupt ('cli') instruction
-	; to disable interrupts, the halt instruction ('hlt') to stop the CPU until
-	; the next interrupt arrives, and jumping to the halt instruction if it ever
-	; continues execution, just to be safe.
-;; 	cli
-;; .hang:
-;; 	hlt
-;; 	jmp .hang
+; This part MUST be 4byte aligned, so we solve that issue using 'ALIGN 4'
+ALIGN 4
+mboot:
+    ; Multiboot macros to make a few lines later more readable
+    MULTIBOOT_PAGE_ALIGN	equ 1<<0
+    MULTIBOOT_MEMORY_INFO	equ 1<<1
+    MULTIBOOT_AOUT_KLUDGE	equ 1<<16
+    MULTIBOOT_HEADER_MAGIC	equ 0x1BADB002
+    MULTIBOOT_HEADER_FLAGS	equ MULTIBOOT_PAGE_ALIGN | MULTIBOOT_MEMORY_INFO | MULTIBOOT_AOUT_KLUDGE
+    MULTIBOOT_CHECKSUM	equ -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
+    EXTERN code, bss, end
 
-	;;  Above 4 lines are the commented lines as found in the original assembly file in the website wiki osdev.org
-jmp $ 
+    ; This is the GRUB Multiboot header. A boot signature
+    dd MULTIBOOT_HEADER_MAGIC
+    dd MULTIBOOT_HEADER_FLAGS
+    dd MULTIBOOT_CHECKSUM
+    
+    ; AOUT kludge - must be physical addresses. Make a note of these:
+    ; The linker script fills in the data for these ones!
+    dd mboot
+    dd code
+    dd bss
+    dd end
+    dd start
+
+; This is an endless loop here. Make a note of this: Later on, we
+; will insert an 'extern _main', followed by 'call _main', right
+; before the 'jmp $'.
+stublet:
+    extern kernel_main
+    call   kernel_main
+    jmp $
+
+; This will set up our new segment registers. We need to do
+; something special in order to set CS. We do what is called a
+; far jump. A jump that includes a segment as well as an offset.
+; This is declared in C as 'extern void gdt_flush();'
+global gdt_flush     ; Allows the C code to link to this
+extern gp            ; Says that '_gp' is in another file
+gdt_flush:
+    lgdt [gp]        ; Load the GDT with our '_gp' which is a special pointer
+    mov ax, 0x10      ; 0x10 is the offset in the GDT to our data segment
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    jmp 0x08:flush2   ; 0x08 is the offset to our code segment: Far jump!
+flush2:
+    ret               ; Returns back to the C code!
+
+; In just a few pages in this tutorial, we will add our Interrupt
+; Service Routines (ISRs) right here!
+
+
+
+; Here is the definition of our BSS section. Right now, we'll use
+; it just to store the stack. Remember that a stack actually grows
+; downwards, so we declare the size of the data before declaring
+; the identifier '_sys_stack'
+SECTION .bss
+    resb 8192               ; This reserves 8KBytes of memory here
+_sys_stack:
