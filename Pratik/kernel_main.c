@@ -5,7 +5,9 @@
 #endif
 #include <stddef.h>
 #include <stdint.h>
- 
+#include <initialize.h> 
+#define uint32_t unsigned int 
+extern void gdt_install(uint32_t) ; 
 /* This tutorial will only work for the 32-bit ix86 targets. */
  
 /* Hardware text mode color constants. */
@@ -109,8 +111,17 @@ extern "C" /* Use C linkage for kernel_main. */
 #endif
 void kernel_main()
 {
-	terminal_initialize();
+	int state = check_processor_state() ; 
 	/* Since there is no support for newlines in terminal_putchar yet, \n will
 	   produce some VGA specific character instead. This is normal. */
-	terminal_writestring("Hello, kernel World!\n");
+	terminal_initialize() ; 
+	if(state == 0)
+	{
+		terminal_writestring("The processor is working correctly.") ; 
+	}
+	else 
+	{
+		terminal_writestring("The processor is faulty.") ; 
+	}
+	//gdt_install(3) ; 
 }
