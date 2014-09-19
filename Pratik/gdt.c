@@ -99,12 +99,12 @@ void gdt_install(uint32_t size)
     *  uses 32-bit opcodes, and is a Code Segment descriptor.
     *  Please check the table above in the tutorial in order
     *  to see exactly what each value means */
-    gdt_set_gate(1, 0, 0x1538, 0x9A, 0xCF);           // Initially addresses were 0 
+    gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);            
 
     /* The third entry is our Data Segment. It's EXACTLY the
     *  same as our code segment, but the descriptor type in
     *  this entry's access byte says it's a Data Segment */
-    gdt_set_gate(2, 0x1539, 0xFFFFFFFF, 0x92, 0xCF);
+    gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 
     /* Flush out the old GDT and install the new changes! */
     gdt_flush();

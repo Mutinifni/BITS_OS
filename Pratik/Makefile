@@ -11,7 +11,7 @@ all: kernel_main.o kernel.o gdt.o start.o initialize.o
 	cp  myos.bin isodir/boot/
 	cp grub.cfg isodir/boot/grub/
 	grub-mkrescue -o myos.iso isodir
-	qemu-system-i386 -cdrom myos.iso --no-reboot 
+	qemu-system-i386  -cdrom myos.iso --no-reboot 
 start.o: start.asm
 	nasm -f elf -o start.o start.asm 
 gdt.o: gdt.c 

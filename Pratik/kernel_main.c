@@ -111,17 +111,18 @@ extern "C" /* Use C linkage for kernel_main. */
 #endif
 void kernel_main()
 {
-	int state = check_processor_state() ; 
+	int state = check_processor_state() ;
 	/* Since there is no support for newlines in terminal_putchar yet, \n will
 	   produce some VGA specific character instead. This is normal. */
-	terminal_initialize() ; 
+	terminal_initialize() ;
+	terminal_putchar((char)(state + '0')) ; 
 	if(state == 0)
 	{
-		terminal_writestring("The processor is working correctly.") ; 
+		terminal_writestring("The processor is working correctly.") ;
 	}
-	else 
+	else
 	{
-		terminal_writestring("The processor is faulty.") ; 
+		terminal_writestring("The processor is faulty.") ;
 	}
 	//gdt_install(3) ; 
 }
