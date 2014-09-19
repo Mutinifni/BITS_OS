@@ -30,7 +30,7 @@ Here. ends the description of how to setup the global desriptor table.
 /* The code we are writing is guaranteed to work on a 32 bit computer. No guarantee for 64 bit computer !*/  
 /* Although, the description of the descriptor tends to be correct, in many places this is presented in a different way. */ 
 /* Include all these header files from the include file we have made in our operating system. */ 
-extern void gdt_flush() ; 
+extern void gdt_flush()  ; 
 #define uint32_t unsigned int 
 #define uint16_t unsigned short
 #define uint8_t unsigned char 

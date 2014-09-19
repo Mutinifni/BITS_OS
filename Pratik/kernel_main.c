@@ -20,6 +20,7 @@ void kernel_main()
 	init_video(&sc) ; 
 	puts(&sc, "Hello world in new functions\n") ; 
 	print_int(&sc, state) ; 
+	gdt_install(3) ; 
 	/* Since there is no support for newlines in terminal_putchar yet, \n will
 	   produce some VGA specific character instead. This is normal. */
 	//gdt_install(3) ; 

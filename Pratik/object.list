@@ -1,0 +1,8 @@
+kernel_main.o
+kernel.o
+gdt.o 
+start.o
+initialize.o
+scrn.o 
+system.o 
+string.o 
