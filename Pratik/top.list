@@ -1,4 +1,2 @@
 kernel.o 
-kernel_main.o 
-gdt.o 
-start.o 
+kernel_main.o

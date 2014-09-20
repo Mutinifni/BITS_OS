@@ -176,26 +176,42 @@ void print_text(screen* ptr, const char *text)
 
 void print_int(screen* ptr, int n)
 {
-    if(n<0)
+    if(n < 0)
     {
         putch(ptr, '-');
         n = -n;
     }
-
-    if(n == 0)
+    if(n/10)
     {
-        putch(ptr, '0');
+        print_int(ptr, n/10);
     }
+    putch(ptr, n%10 + '0');
+}
 
-    else
+void print_long_int(screen* ptr, long int n)
+{
+    if(n < 0)
     {
-        if(n > 10)
-            print_int(ptr, n / 10);
-        putch(ptr, n % 10 + '0');
+        putch(ptr, '-');
+        n = -n;
     }
+    if(n/10)
+    {
+        print_long_int(ptr, n/10);
+    }
+    putch(ptr, n%10 + '0');
 }
 
 void print_double(screen* ptr, double n)
+{
+    print_int(ptr, (int) n);
+    n -= (int) n;
+    putch(ptr,'.');
+    n *= 1000000;
+    print_int(ptr, (int) n);
+}
+
+void print_float(screen* ptr, float n)
 {
     print_int(ptr, (int) n);
     n -= (int) n;

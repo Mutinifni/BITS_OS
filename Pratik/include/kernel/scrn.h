@@ -11,7 +11,9 @@ struct screen
 } ; 
 typedef struct screen screen ; 
 void print_int(screen*, int) ; 
-void print_double(screen*, double) ; 
+void print_long_int(screen*, long int) ;
+void print_double(screen*, double) ;
+void print_float(screen*, float) ; 
 void print_text(screen*, const char*) ; 
 void initialize_screen(screen*) ; 
 void scroll(screen*) ; 
