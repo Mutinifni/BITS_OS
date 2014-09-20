@@ -22,5 +22,6 @@ extern void irq15() __asm__ ("irq15");
 void irq_handler(regs*) ; 
 void irq_install() ; 
 void irq_remap() ; 
-void irq_uninstall_handler(int) ;  
+void irq_uninstall_handler(int) ;
+void irq_install_handler(int irq, void (*handler)(struct regs *r)) ;   
 #endif 

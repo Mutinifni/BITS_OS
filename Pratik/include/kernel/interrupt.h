@@ -10,10 +10,9 @@ struct regs
     unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */
     unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
 };
-typedef struct regs regs ;   
+typedef struct regs regs ; 
 void isrs_install() ; 
 void idt_install() ; 
-void irq_install() ; 
 /* Defines an IDT entry */
 struct idt_entry
 {

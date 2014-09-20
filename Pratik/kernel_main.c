@@ -8,6 +8,7 @@
 #include <interrupt.h> 
 #include <system.h> 
 #include <scrn.h> 
+#include <keyboard.h> 
 #define uint32_t unsigned int 
 extern void gdt_install(uint32_t) ; 
 /* This tutorial will only work for the 32-bit ix86 targets. */
@@ -20,6 +21,7 @@ void kernel_main()
 	idt_install() ; 
 	isrs_install() ; 
 	irq_install() ; 
+	keyboard_install() ; 
 	int state = 0 ; 
 	screen sc  ;  
 	init_video(&sc) ; 

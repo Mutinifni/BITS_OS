@@ -1,14 +1,14 @@
 #include <system.h> 
 #include <irq.h>
 #define UInt32 unsigned int  
-/* This array is actually an array of function pointers. We use
-*  this to handle custom IRQ handlers for a given IRQ */
 void *irq_routines[16] =
 {
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0
 };
 
+/* This array is actually an array of function pointers. We use
+*  this to handle custom IRQ handlers for a given IRQ */
 /* This installs a custom IRQ handler for the given IRQ */
 void irq_install_handler(int irq, void (*handler)(struct regs *r))
 {

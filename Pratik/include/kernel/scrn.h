@@ -10,6 +10,7 @@ struct screen
     int32_t csr_y ; 
 } ; 
 typedef struct screen screen ; 
+screen sc ; 
 void print_int(screen*, int) ; 
 void print_long_int(screen*, long int) ;
 void print_double(screen*, double) ;
