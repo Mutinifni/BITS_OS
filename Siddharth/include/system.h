@@ -3,6 +3,14 @@
 
 typedef unsigned int size_t;
 
+struct regs
+{
+    unsigned int gs, fs, es, ds;      /* pushed the segs last */
+    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;  /* pushed by 'pusha' */
+    unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */
+    unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
+};
+
 /* MEMFN.C */
 extern void *memcpy(void *dest, const void *src, size_t count);
 extern void *memset(void *dest, char val, size_t count);
@@ -23,5 +31,16 @@ extern void init_video(void);
 extern void print(const char *text);
 extern void print(int n);
 extern void print(double n);
+
+/* GDT.C */
+extern void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
+extern void gdt_install();
+
+/* IDT.C */
+extern void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags);
+extern void idt_install();
+
+/* ISRS.C */
+extern void isrs_install();
 
 #endif
