@@ -19,8 +19,9 @@ void kernel_main()
 	gdt_install(3) ; 
 	idt_install() ; 
 	isrs_install() ; 
+	irq_install() ; 
 	int state = 0 ; 
-	screen sc  ; 
+	screen sc  ;  
 	init_video(&sc) ; 
 	puts(&sc, "Hello world in new functions\n") ; 
 	print_int(&sc, state) ;  

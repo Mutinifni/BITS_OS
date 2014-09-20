@@ -2,6 +2,7 @@
 #define INTERRUPT_H 
 #include <string.h>
 
+void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags) ;
 struct regs
 {
     unsigned int gs, fs, es, ds;      /* pushed the segs last */
@@ -12,6 +13,7 @@ struct regs
 typedef struct regs regs ;   
 void isrs_install() ; 
 void idt_install() ; 
+void irq_install() ; 
 /* Defines an IDT entry */
 struct idt_entry
 {
