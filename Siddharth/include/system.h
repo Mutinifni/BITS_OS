@@ -56,4 +56,9 @@ extern void timer_install();
 /* KEYBOARD.C */
 extern void keyboard_install();
 
+/* KBDFN.C */
+extern void toggle_caps();
+extern void toggle_shift(int a);
+extern void s_putch(const char c);
+
 #endif

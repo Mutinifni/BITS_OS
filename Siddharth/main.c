@@ -13,7 +13,7 @@ int main()
 
     __asm__ __volatile__ ("sti");
 
-    print("\t\t\t\t Hello, World\n");
+    print("\t\t\t\t Operating System \n");
     for (;;);
     return 0;
 }

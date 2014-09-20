@@ -4,7 +4,7 @@
 *  colors (attributes), and x and y cursor coordinates */
 UInt16 *textmemptr;
 int attrib = 0x0F;
-int csr_x = 0, csr_y = 0;
+UInt32 csr_x = 0, csr_y = 0;
 
 /* Sets our text-mode VGA pointer, then clears the screen for us */
 void init_video(void)
@@ -85,6 +85,7 @@ void putch(const char c)
     UInt16 *where;
     UInt32 att = attrib << 8;
 
+
     /* Handle a backspace, by moving the cursor back one space */
     if(c == 0x08)
     {
@@ -97,11 +98,15 @@ void putch(const char c)
 
         else
         {
-            csr_x = 79;
-            csr_y--;
-            putch(' ');
-            csr_x = 79;
-            csr_y--;
+            if(csr_y == 0);
+            else
+            {
+                csr_x = 79;
+                csr_y--;
+                putch(' ');
+                csr_x = 79;
+                csr_y--;
+            }
         }
     }
     /* Handles a tab by incrementing the cursor's x, but only

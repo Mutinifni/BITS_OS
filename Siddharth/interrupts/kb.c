@@ -20,7 +20,7 @@ unsigned char kbdus[128] =
   '*',
     0,	/* Alt */
   ' ',	/* Space bar */
-    0,	/* Caps lock */
+    0,	/* Caps lock 58*/
     0,	/* 59 - F1 key ... > */
     0,   0,   0,   0,   0,   0,   0,   0,
     0,	/* < ... F10 */
@@ -59,6 +59,12 @@ void keyboard_handler(struct regs *r)
     {
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
+        switch(scancode)
+        {
+            case 42 : toggle_shift(0); break;
+            default : break;
+        }
+
     }
     else
     {
@@ -74,7 +80,12 @@ void keyboard_handler(struct regs *r)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
-        putch(kbdus[scancode]);
+        switch(scancode)
+        {
+            case 42 : toggle_shift(1); break;
+            case 58 : toggle_caps(); break;
+            default : s_putch(kbdus[scancode]); break;
+        }
     }
 }
 
