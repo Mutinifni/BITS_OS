@@ -4,10 +4,15 @@ int main()
 {
 	gdt_install();
     idt_install();
-    isrs_install();	
+    isrs_install();
+    irq_install();
+    timer_install();
+    keyboard_install();
+    __asm__ __volatile__ ("sti"); // Re-enable interrupts command (opposite of cli)	
     init_video();
-    double f = 2323.45;
-    print(f);
+    //int f = 5;
+    //int k = 0;
+    //print(f/k);
     for (;;);
     return 0;
 }

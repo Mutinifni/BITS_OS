@@ -123,6 +123,13 @@ const char *exception_messages[] =
     "Reserved"
 };
 
+
+/* All of our Exception handling Interrupt Service Routines will
+*  point to this function. This will tell us what exception has
+*  happened! Right now, we simply halt the system by hitting an
+*  endless loop. All ISRs disable interrupts while they are being
+*  serviced as a 'locking' mechanism to prevent an IRQ from
+*  happening and messing up kernel data structures */
 extern "C" void fault_handler(struct regs *r)
 {
     if (r->int_no < 32)

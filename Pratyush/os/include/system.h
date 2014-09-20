@@ -45,4 +45,18 @@ extern void idt_install();
 // isrs functions
 extern void isrs_install();
 
+// irq functions
+extern void irq_install_handler(int irq, void (*handler)(struct regs *r));
+extern void irq_uninstall_handler(int irq);
+extern void irq_install();
+
+// timer functions
+extern void timer_handler(struct regs *r);
+extern void timer_wait(int ticks);
+extern void timer_install();
+
+// keyboard functions
+extern void keyboard_handler(struct regs *r);
+extern void keyboard_install();
+
 #endif
