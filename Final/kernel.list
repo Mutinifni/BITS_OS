@@ -2,3 +2,5 @@ lib/kernel/initialize.o
 lib/kernel/scrn.o
 lib/kernel/system.o 
 lib/kernel/gdt.o
+lib/kernel/idt.o
+lib/kernel/isrs.o

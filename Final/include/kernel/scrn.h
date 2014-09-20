@@ -24,4 +24,3 @@ void puts(screen*, const char*) ;
 void settextcolor(screen*, uint8_t, uint8_t) ; 
 void init_video(screen*) ; 
 #endif 
-

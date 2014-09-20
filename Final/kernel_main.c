@@ -8,14 +8,19 @@
 #include <system.h> 
 #include <scrn.h>
 #include <gdt.h> 
+#include <idt.h>
+#include <isrs.h>
 #define uint32_t unsigned int 
 
 #if defined(__cplusplus)
 extern "C" /* Use C linkage for kernel_main. */
 #endif 
+
 void kernel_main()
 {
 	gdt_install();
+    idt_install();
+    isrs_install();		
 	int state = check_processor_state() ;
 	screen sc  ; 
 	init_video(&sc) ; 
