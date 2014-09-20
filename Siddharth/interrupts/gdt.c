@@ -2,17 +2,17 @@
 
 struct gdt_entry
 {
-    unsigned short limit_low;
-    unsigned short base_low;
-    unsigned char base_middle;
-    unsigned char access;
-    unsigned char granularity;
-    unsigned char base_high;
+    UInt16 limit_low;
+    UInt16 base_low;
+    UInt8 base_middle;
+    UInt8 access;
+    UInt8 granularity;
+    UInt8 base_high;
 } __attribute__((packed));
 
 struct gdt_ptr
 {
-    unsigned short limit;
+    UInt16 limit;
     unsigned int base;
 } __attribute__((packed));
 
@@ -21,7 +21,7 @@ struct gdt_ptr gp;
 
 extern void gdt_flush() __asm__("gdt_flush");
 
-void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
+void gdt_set_gate(int num, UInt32 base, UInt32 limit, UInt8 access, UInt8 gran)
 {
     /* Setup the descriptor base address */
     gdt[num].base_low = (base & 0xFFFF);

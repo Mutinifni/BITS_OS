@@ -2,17 +2,17 @@
 
 struct idt_entry
 {
-    unsigned short base_lo;
-    unsigned short sel;        /* Our kernel segment goes here! */
-    unsigned char always0;     /* This will ALWAYS be set to 0! */
-    unsigned char flags;       /* Set using the above table! */
-    unsigned short base_hi;
+    UInt16 base_lo;
+    UInt16 sel;        /* Our kernel segment goes here! */
+    UInt8 always0;     /* This will ALWAYS be set to 0! */
+    UInt8 flags;       /* Set using the above table! */
+    UInt16 base_hi;
 } __attribute__((packed));
 
 struct idt_ptr
 {
-    unsigned short limit;
-    unsigned int base;
+    UInt16 limit;
+    UInt32 base;
 } __attribute__((packed));
 
 struct idt_entry idt[256];
@@ -21,7 +21,7 @@ struct idt_ptr idtp;
 /* This exists in 'start.asm', and is used to load our IDT */
 extern void idt_load() __asm__ ("idt_load");
 
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
+void idt_set_gate(UInt8 num, UInt32 base, UInt16 sel, UInt8 flags)
 {
     /* The interrupt routine's base address */
     idt[num].base_lo = (base & 0xFFFF);
@@ -39,7 +39,7 @@ void idt_install()
 {
     /* Sets the special IDT pointer up, just like in 'gdt.c' */
     idtp.limit = (sizeof (struct idt_entry) * 256) - 1;
-    idtp.base = (unsigned int) &idt;
+    idtp.base = (UInt32) &idt;
 
     /* Clear out the entire IDT, initializing it to zeros */
     memset(&idt, 0, sizeof(struct idt_entry) * 256);

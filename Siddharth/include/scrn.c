@@ -1,22 +1,22 @@
-#include "system.h"
+#include <system.h>
 
 /* These define our textpointer, our background and foreground
 *  colors (attributes), and x and y cursor coordinates */
-unsigned short *textmemptr;
+UInt16 *textmemptr;
 int attrib = 0x0F;
 int csr_x = 0, csr_y = 0;
 
 /* Sets our text-mode VGA pointer, then clears the screen for us */
 void init_video(void)
 {
-    textmemptr = (unsigned short *)0xB8000;
+    textmemptr = (UInt16*)0xB8000;
     cls();
 }
 
 /* Scrolls the screen */
 void scroll(void)
 {
-    unsigned blank, temp;
+    UInt32 blank, temp;
 
     /* A blank is defined as a space... we need to give it backcolor too */
     blank = 0x20 | (attrib << 8);
@@ -40,7 +40,7 @@ void scroll(void)
 *  on the screen under the last character pressed! */
 void move_csr(void)
 {
-    unsigned temp;
+    UInt32 temp;
 
     /* The equation for finding the index in a linear
     *  chunk of memory can be represented by:
@@ -60,7 +60,7 @@ void move_csr(void)
 /* Clears the screen */
 void cls()
 {
-    unsigned blank;
+    UInt32 blank;
     int i;
 
     /* Again, we need the 'short' that will be used to
@@ -82,8 +82,8 @@ void cls()
 /* Puts a single character on the screen */
 void putch(const char c)
 {
-    unsigned short *where;
-    unsigned att = attrib << 8;
+    UInt16 *where;
+    UInt32 att = attrib << 8;
 
     /* Handle a backspace, by moving the cursor back one space */
     if(c == 0x08)
@@ -135,7 +135,7 @@ void putch(const char c)
 }
 
 /* Sets the forecolor and backcolor that we will use */
-void settextcolor(unsigned char forecolor, unsigned char backcolor)
+void settextcolor(UInt8 forecolor, UInt8 backcolor)
 {
     /* Top 4 bytes are the background, bottom 4 bytes
     *  are the foreground color */
