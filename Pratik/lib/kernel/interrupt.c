@@ -1,15 +1,21 @@
 #include <interrupt.h> 
-#include <scrn.h> 
+#include <scrn.h>
+#define UInt32 unsigned int  
+struct idt_entry idt[256];
+struct idt_ptr idtp;
 /* Use this function to set an entry in the IDT. Alot simpler
 *  than twiddling with the GDT ;) */
-void fault_handler(regs*) ; 
 void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
 {
-    idt[num].sel = sel ; 
-    idt[num].flags = flags ; 
-    idt[num].always0 = 0 ; 
-    idt[num].base_hi = base >> 8 ; 
-    idt[num].base_lo = (base & 0xff) ; 
+    /* The interrupt routine's base address */
+    idt[num].base_lo = (base & 0xFFFF);
+    idt[num].base_hi = (base >> 16) & 0xFFFF;
+
+    /* The segment or 'selector' that this IDT entry will use
+    *  is set here, along with any access flags */
+    idt[num].sel = sel;
+    idt[num].always0 = 0;
+    idt[num].flags = flags;
 }
 
 /* Installs the IDT */
@@ -17,17 +23,15 @@ void idt_install()
 {
     /* Sets the special IDT pointer up, just like in 'gdt.c' */
     idtp.limit = (sizeof (struct idt_entry) * 256) - 1;
-    idtp.base = (unsigned int)&idt;
+    idtp.base = (UInt32) &idt;
 
     /* Clear out the entire IDT, initializing it to zeros */
     memset(&idt, 0, sizeof(struct idt_entry) * 256);
 
-    /* Add any new ISRs to the IDT here using idt_set_gate */
-
-    /* Points the processor's internal register to the new IDT */
     idt_load();
-} 
 
+} 
+/* isrs code begins now. -------------------------------------------------------------------------------------*/ 
 /* These are function prototypes for all of the exception
 *  handlers: The first 32 entries in the IDT are reserved
 *  by Intel, and are designed to service exceptions! */

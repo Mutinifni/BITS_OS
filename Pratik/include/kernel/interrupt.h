@@ -1,8 +1,6 @@
 #ifndef INTERRUPT_H 
 #define INTERRUPT_H 
 #include <string.h>
-
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags) ;
 struct regs
 {
     unsigned int gs, fs, es, ds;      /* pushed the segs last */
@@ -10,9 +8,6 @@ struct regs
     unsigned int int_no, err_code;    /* our 'push byte #' and ecodes do this */
     unsigned int eip, cs, eflags, useresp, ss;   /* pushed by the processor automatically */ 
 };
-typedef struct regs regs ; 
-void isrs_install() ; 
-void idt_install() ; 
 /* Defines an IDT entry */
 struct idt_entry
 {
@@ -29,12 +24,18 @@ struct idt_ptr
     unsigned int base;
 } __attribute__((packed));
 
+typedef struct regs regs ; 
+typedef struct idt_entry idt_entry ;
+typedef struct idt_ptr idt_ptr ; 
+
+void fault_handler(regs*) ; 
+void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags) ;
+void isrs_install() ; 
+void idt_install() ; 
 /* We have declared an IDT of 256 entries, if we hit on a interrupt and it goes unhandled, it will generate a
 interrupt unhandled exception. */ 
-struct idt_entry idt[256];
-struct idt_ptr idtp;
 
 /* This exists in 'start.asm', and is used to load our IDT */
-extern void idt_load();
+extern void idt_load() __asm__("idt_load");
 
 #endif 		
