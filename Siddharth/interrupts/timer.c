@@ -20,6 +20,7 @@ void timer_handler(struct regs *r)
     {
         print("One second has passed\n");
     }
+    
 }
 
 /* This will continuously loop until the given time has
