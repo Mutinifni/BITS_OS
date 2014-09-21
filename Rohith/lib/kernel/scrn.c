@@ -2,6 +2,7 @@
 
 #include <system.h>
 #include <scrn.h> 
+#include <string.h> 
 /* These define our textpointer, our background and foreground
 *  colors (attributes), and x and y cursor coordinates */
 unsigned short *textmemptr;
