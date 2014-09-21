@@ -26,10 +26,12 @@ extern void cls();
 extern void putch(unsigned char c);
 extern void print(const char *str);
 extern void settextcolor(unsigned char forecolor, unsigned char backcolor);
+extern void arrow_keys(char dir);
 extern void init_video();
 
 // print functions
 extern void print(int num);
+extern void print(unsigned int num);
 extern void print(long num);
 extern void print(float num);	
 extern void print(double num);
@@ -55,8 +57,18 @@ extern void timer_handler(struct regs *r);
 extern void timer_wait(int ticks);
 extern void timer_install();
 
-// keyboard functions
+// kb functions
 extern void keyboard_handler(struct regs *r);
 extern void keyboard_install();
+
+// kbdfn functions
+extern void toggle_caps();
+extern void toggle_shift();
+extern void toggle_ctrl();
+extern void toggle_alt();
+extern void s_putch(char c);
+
+// rtc functions
+extern void read_rtc();
 
 #endif

@@ -85,7 +85,25 @@ void putch(unsigned char c)
     /* Handle a backspace, by moving the cursor back one space */
     if(c == 0x08)
     {
-        if(csr_x != 0) csr_x--;
+        if(csr_x != 0)
+        {
+            csr_x --;
+            putch(' ');
+            csr_x--;
+        }
+
+        else
+        {
+            if(csr_y == 0);
+            else
+            {
+                csr_x = 79;
+                csr_y--;
+                putch(' ');
+                csr_x = 79;
+                csr_y--;
+            }
+        }
     }
     /* Handles a tab by incrementing the cursor's x, but only
     *  to a point that will make it divisible by 8 */
@@ -139,10 +157,24 @@ void settextcolor(unsigned char forecolor, unsigned char backcolor)
     attrib = (backcolor << 4) | (forecolor & 0x0F);
 }
 
+/* Arrow key movement support */
+void arrow_keys(char dir)
+{
+    switch(dir)
+    {
+        case 'l': if(csr_x) csr_x--; else { csr_x = 79; csr_y--; } break;
+        case 'r': if(csr_x != 79) csr_x++; else { csr_x = 0; csr_y++; } break;
+        case 'u': if(csr_y) csr_y--; break;
+        case 'd': if(csr_y != 24) csr_y++; break;
+        default : break;
+    }
+    move_csr();
+}
+
 /* Sets our text-mode VGA pointer, then clears the screen for us */
 void init_video(void)
 {
     textmemptr = (unsigned short *)0xB8000;
     cls();
 }
-		
+

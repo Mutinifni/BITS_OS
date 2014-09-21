@@ -15,6 +15,21 @@ void print(int num)
     putch(num%10 + '0');
 }
 
+/* Takes an unsigned integer and prints it on the console. */
+void print(unsigned int num)
+{
+    if(num < 0)
+    {
+        putch('-');
+        num = -num;
+    }
+    if(num/10)
+    {
+        print(num/10);
+    }
+    putch(num%10 + '0');
+}
+
 /* Takes a long and prints it on the console. */
 void print(long num)
 {
