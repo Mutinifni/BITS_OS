@@ -29,7 +29,7 @@ typedef struct idt_entry idt_entry ;
 typedef struct idt_ptr idt_ptr ; 
 
 void fault_handler(regs*) ; 
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags) ;
+void idt_set_gate(unsigned char num, unsigned int base, unsigned short sel, unsigned char flags) ; 
 void isrs_install() ; 
 void idt_install() ; 
 /* We have declared an IDT of 256 entries, if we hit on a interrupt and it goes unhandled, it will generate a

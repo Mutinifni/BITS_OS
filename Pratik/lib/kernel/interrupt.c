@@ -5,7 +5,7 @@ struct idt_entry idt[256];
 struct idt_ptr idtp;
 /* Use this function to set an entry in the IDT. Alot simpler
 *  than twiddling with the GDT ;) */
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
+void idt_set_gate(unsigned char num, unsigned int base, unsigned short sel, unsigned char flags)
 {
     /* The interrupt routine's base address */
     idt[num].base_lo = (base & 0xFFFF);
