@@ -63,9 +63,12 @@ extern void keyboard_install();
 
 // kbdfn functions
 extern void toggle_caps();
-extern void toggle_shift();
-extern void toggle_ctrl();
-extern void toggle_alt();
+extern void toggle_l_shift();
+extern void toggle_l_ctrl();
+extern void toggle_l_alt();
+extern void toggle_r_shift();
+extern void toggle_r_ctrl();
+extern void toggle_r_alt();
 extern void s_putch(char c);
 
 // rtc functions

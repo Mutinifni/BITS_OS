@@ -1,5 +1,7 @@
 #include "system.h"
 
+extern int timer_ticks;
+
 /* KBDUS means US Keyboard Layout. This is a scancode table
 *  used to layout a standard US keyboard. I have left some
 *  comments in to give you an idea of what key is what, even
@@ -48,24 +50,44 @@ unsigned char kbdus[128] =
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
 {
-    unsigned char scancode;
+    static unsigned char scancode = 0;
+    static unsigned char flag = 0;  // Flag determines left or right in case of alt or ctrl key.
+
+    if(scancode == 224)
+    {
+        flag = !flag;
+    }
 
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
-
     /* If the top bit of the byte we read from the keyboard is
     *  set, that means that a key has just been released */
     if (scancode & 0x80)
     {
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
-        switch(scancode)
+        switch(scancode & ~0x80)
         {
-            case 29 : toggle_ctrl(); break;
-            case 42 : toggle_shift(); break;
-            case 54 : toggle_shift(); break;
-            case 56 : toggle_alt(); break;
-            default : break;
+            case 29 :
+                if(flag)
+                    toggle_r_ctrl();
+                else
+                    toggle_l_ctrl();
+                break;
+            case 42 : 
+                toggle_l_shift(); 
+                break;
+            case 54 : 
+                toggle_r_shift(); 
+                break;
+            case 56 :
+                if(flag)
+                    toggle_l_alt();
+                else
+                    toggle_r_alt(); 
+                break;
+            default : 
+                break;
         }
 
     }
@@ -85,16 +107,42 @@ void keyboard_handler(struct regs *r)
         *  you would add 128 to the scancode when you look for it */
         switch(scancode)
         {
-            case 29 : toggle_ctrl(); break;
-            case 42 : toggle_shift(); break;
-            case 54 : toggle_shift(); break;
-            case 56 : toggle_alt(); break;
-            case 58 : toggle_caps(); break;
-            case 72 : arrow_keys('u'); break;
-            case 75 : arrow_keys('l'); break;
-            case 77 : arrow_keys('r'); break;
-            case 80 : arrow_keys('d'); break;
-            default : s_putch(kbdus[scancode]); break;
+            case 29 :
+                if(flag)
+                    toggle_r_ctrl();
+                else
+                    toggle_l_ctrl();
+                break;
+            case 42 : 
+                toggle_l_shift(); 
+                break;
+            case 54 : 
+                toggle_r_shift(); 
+                break;
+            case 56 : 
+                if(flag)
+                    toggle_l_alt();
+                else
+                    toggle_r_alt(); 
+                break;
+            case 58 : 
+                toggle_caps(); 
+                break;
+            case 72 : 
+                arrow_keys('u'); 
+                break;
+            case 75 : 
+                arrow_keys('l'); 
+                break;
+            case 77 : 
+                arrow_keys('r'); 
+                break;
+            case 80 : 
+                arrow_keys('d'); 
+                break;
+            default : 
+                s_putch(kbdus[scancode]); 
+                break;
         }
     }
 }

@@ -3,9 +3,12 @@
 char spkeys[10]={0};
 /*
 	0 - CAPS_LOCK
-	1 - SHIFT_KEY
-	2 - CTRL KEY
-	3 - ALT KEY
+	1 - LEFT SHIFT_KEY
+	2 - RIGHT SHIFT KEY
+	3 - LEFT ALT KEY
+	4 - RIGHT ALT KEY
+	5 - LEFT CTRL KEY
+	6 - RIGHT CTRL KEY
 */
 
 void toggle_caps()
@@ -13,31 +16,46 @@ void toggle_caps()
 	spkeys[0] = !spkeys[0];
 }
 
-void toggle_shift()
+void toggle_l_shift()
 {
 	spkeys[1] = !spkeys[1];
 }
 
-void toggle_ctrl()
+void toggle_l_ctrl()
 {
-	spkeys[2] = !spkeys[2];
+	spkeys[5] = !spkeys[5];
 }
 
-void toggle_alt()
+void toggle_l_alt()
 {
 	spkeys[3] = !spkeys[3];
 }
 
+void toggle_r_shift()
+{
+	spkeys[2] = !spkeys[2];
+}
+
+void toggle_r_ctrl()
+{
+	spkeys[6] = !spkeys[6];
+}
+
+void toggle_r_alt()
+{
+	spkeys[4] = !spkeys[4];
+}
+
 void s_putch(char c)
 {
-	if (spkeys[0] && c >= 'a' && c <='z')
+	if ((spkeys[0] ^ (spkeys[1] || spkeys[2])) && c >= 'a' && c <='z')
 	{
 		c += 'A' - 'a';
 	}
 
-	else if (spkeys[1])
+	else if (spkeys[1] || spkeys[2])
 	{
-		if(c >= 'a' && c <='z')
+		if(c >= 'a' && c <='z' && !spkeys[0])
 		{
 			c += 'A' - 'a';
 		}
