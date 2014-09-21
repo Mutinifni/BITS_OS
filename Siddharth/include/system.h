@@ -65,9 +65,15 @@ extern void keyboard_install();
 
 /* KBDFN.C */
 extern void toggle_caps();
-extern void toggle_shift();
-extern void toggle_ctrl();
-extern void toggle_alt();
+extern void toggle_lshift();
+extern void toggle_rshift();
+extern void toggle_rctrl();
+extern void toggle_lctrl();
+extern void toggle_ralt();
+extern void toggle_lalt();
 extern void s_putch(const char c);
+
+/* RTC.C */
+extern void read_rtc();
 
 #endif

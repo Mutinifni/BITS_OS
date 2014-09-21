@@ -128,7 +128,7 @@ void putch(const char c)
     {
         csr_x = 0;
         csr_y++;
-        print("user@sidey: ");
+        print("user: ");
     }
     /* Any character greater than and including a space, is a
     *  printable character. The equation for finding the index

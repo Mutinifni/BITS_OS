@@ -5,6 +5,7 @@
 *  comments in to give you an idea of what key is what, even
 *  though I set it's array index to 0. You can change that to
 *  whatever you want using a macro, if you wish! */
+
 unsigned char kbdus[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
@@ -48,7 +49,15 @@ unsigned char kbdus[128] =
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
 {
-    UInt8 scancode;
+    static UInt8 scancode;
+    static UInt8 flag;
+    if(scancode == 224)
+    {
+        flag = 1;
+        return ;
+    }
+    else
+        flag = 0;
 
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
@@ -59,12 +68,12 @@ void keyboard_handler(struct regs *r)
     {
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
-        switch(scancode)
+        switch(scancode & ~0x80)
         {
-            case 29 : toggle_ctrl(); break;
-            case 42 : toggle_shift(); break;
-            case 54 : toggle_shift(); break;
-            case 56 : toggle_alt(); break;
+            case 29 : if(flag) toggle_rctrl(); else toggle_lctrl(); break;
+            case 42 : toggle_lshift(); break;
+            case 54 : toggle_rshift(); break;
+            case 56 : if(flag) toggle_ralt(); else toggle_lalt(); break;
             default : break;
         }
 
@@ -85,10 +94,10 @@ void keyboard_handler(struct regs *r)
         *  you would add 128 to the scancode when you look for it */
         switch(scancode)
         {
-            case 29 : toggle_ctrl(); break;
-            case 42 : toggle_shift(); break;
-            case 54 : toggle_shift(); break;
-            case 56 : toggle_alt(); break;
+            case 29 : if(flag) toggle_rctrl(); else toggle_lctrl(); break;
+            case 42 : toggle_lshift(); break;
+            case 54 : toggle_rshift(); break;
+            case 56 : if(flag) toggle_ralt(); else toggle_lalt(); break;
             case 58 : toggle_caps(); break;
             case 72 : arrow_keys('u'); break;
             case 75 : arrow_keys('l'); break;

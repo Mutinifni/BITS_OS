@@ -1,7 +1,5 @@
 #include <system.h>
 
-extern void read_rtc();
-
 int main()
 {
     gdt_install();
@@ -15,7 +13,7 @@ int main()
 
     __asm__ __volatile__ ("sti");
 
-    print("\t\t\t\t Operating System \n");
+    print("\t\t Operating System \t");
     read_rtc();
     for (;;);
     return 0;
