@@ -4,6 +4,8 @@ UInt8 spkeys[10]={0};
 /*
 	0 - CAPS_LOCK
 	1 - SHIFT_KEY
+	2 - CTRL KEY
+	3 - ALT KEY
 */
 
 void toggle_caps()
@@ -11,9 +13,19 @@ void toggle_caps()
 	spkeys[0] = !spkeys[0];
 }
 
-void toggle_shift(int a)
+void toggle_shift()
 {
-	spkeys[1] = a;
+	spkeys[1] = !spkeys[1];
+}
+
+void toggle_ctrl()
+{
+	spkeys[2] = !spkeys[2];
+}
+
+void toggle_alt()
+{
+	spkeys[3] = !spkeys[3];
 }
 
 void s_putch(char c)

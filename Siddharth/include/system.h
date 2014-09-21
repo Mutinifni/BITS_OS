@@ -4,6 +4,7 @@
 typedef unsigned char UInt8;
 typedef unsigned short int  UInt16;
 typedef unsigned int UInt32;
+typedef unsigned long long UInt64;
 
 struct regs
 {
@@ -28,10 +29,16 @@ extern void cls();
 extern void putch(const char c);
 extern void settextcolor(UInt8 forecolor, UInt8 backcolor);
 extern void init_video(void);
+extern void arrow_keys(char dir);
 
 /* PRNT.C */
 extern void print(const char *text);
+extern void print(short n);
 extern void print(int n);
+extern void print(long n);
+extern void print(UInt16 n);
+extern void print(UInt32 n);
+extern void print(UInt64 n);
 
 /* GDT.C */
 extern void gdt_set_gate(int num, UInt32 base, UInt32 limit, UInt8 access, UInt8 gran);
@@ -58,7 +65,9 @@ extern void keyboard_install();
 
 /* KBDFN.C */
 extern void toggle_caps();
-extern void toggle_shift(int a);
+extern void toggle_shift();
+extern void toggle_ctrl();
+extern void toggle_alt();
 extern void s_putch(const char c);
 
 #endif

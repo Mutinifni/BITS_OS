@@ -61,7 +61,10 @@ void keyboard_handler(struct regs *r)
         *  shift, alt, or control keys... */
         switch(scancode)
         {
-            case 42 : toggle_shift(0); break;
+            case 29 : toggle_ctrl(); break;
+            case 42 : toggle_shift(); break;
+            case 54 : toggle_shift(); break;
+            case 56 : toggle_alt(); break;
             default : break;
         }
 
@@ -82,8 +85,15 @@ void keyboard_handler(struct regs *r)
         *  you would add 128 to the scancode when you look for it */
         switch(scancode)
         {
-            case 42 : toggle_shift(1); break;
+            case 29 : toggle_ctrl(); break;
+            case 42 : toggle_shift(); break;
+            case 54 : toggle_shift(); break;
+            case 56 : toggle_alt(); break;
             case 58 : toggle_caps(); break;
+            case 72 : arrow_keys('u'); break;
+            case 75 : arrow_keys('l'); break;
+            case 77 : arrow_keys('r'); break;
+            case 80 : arrow_keys('d'); break;
             default : s_putch(kbdus[scancode]); break;
         }
     }

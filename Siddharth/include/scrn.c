@@ -128,6 +128,7 @@ void putch(const char c)
     {
         csr_x = 0;
         csr_y++;
+        print("user@sidey: ");
     }
     /* Any character greater than and including a space, is a
     *  printable character. The equation for finding the index
@@ -159,4 +160,17 @@ void settextcolor(UInt8 forecolor, UInt8 backcolor)
     /* Top 4 bytes are the background, bottom 4 bytes
     *  are the foreground color */
     attrib = (backcolor << 4) | (forecolor & 0x0F);
+}
+
+void arrow_keys(char dir)
+{
+    switch(dir)
+    {
+        case 'l': if(csr_x) csr_x--; else { csr_x = 79; csr_y--; } break;
+        case 'r': if(csr_x != 79) csr_x++; else { csr_x = 0; csr_y++; } break;
+        case 'u': if(csr_y) csr_y--; break;
+        case 'd': if(csr_y != 24) csr_y++; break;
+        default : break;
+    }
+    move_csr();
 }
