@@ -3,6 +3,16 @@
 
 typedef int size_t;
 
+struct Time
+{ 
+      unsigned char sec;
+      unsigned char min;
+      unsigned char hour;
+      unsigned char day;
+      unsigned char month;
+      unsigned int year;
+ };
+
 /*This defines what the stack looks like after an ISR was running */
 struct regs
 {
@@ -72,6 +82,7 @@ extern void toggle_r_alt();
 extern void s_putch(char c);
 
 // rtc functions
-extern void read_rtc();
+extern Time read_rtc();
+extern void print_Time(Time t);
 
 #endif

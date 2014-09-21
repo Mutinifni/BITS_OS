@@ -1,6 +1,7 @@
 #include "system.h"
 #define CURRENT_YEAR 2014                            // Change this each year!
 
+/*
 struct Time
 { 
       unsigned char sec;
@@ -10,7 +11,7 @@ struct Time
       unsigned char month;
       unsigned int year;
  }current_time;
-
+*/
 /* Prints an instance of Time struct */
 void print_Time(Time t)
 {
@@ -113,14 +114,10 @@ unsigned char get_RTC_register(int reg)
       return inportb(cmos_data);
 }
 
-void read_rtc()
+/* Reads time from RTC and returns it in a Time struct */
+Time read_rtc()
 {
-      unsigned char last_sec;
-      unsigned char last_min;
-      unsigned char last_hour;
-      unsigned char last_day;
-      unsigned char last_month;
-      unsigned char last_year;
+      Time current_time;
       unsigned char registerB;
   
       // Note: This uses the "read registers until you get the same values twice in a row" technique
@@ -134,24 +131,6 @@ void read_rtc()
       current_time.day = get_RTC_register(0x07);
       current_time.month = get_RTC_register(0x08);
       current_time.year = get_RTC_register(0x09);
- 
-      do
-      {
-            last_sec = current_time.sec;
-            last_min = current_time.min;
-            last_hour = current_time.hour;
-            last_day = current_time.day;
-            last_month = current_time.month;
-            last_year = current_time.year;
- 
-            while (get_update_in_progress_flag());  // Make sure an update isn't in progress
-            current_time.sec = get_RTC_register(0x00);
-            current_time.min = get_RTC_register(0x02);
-            current_time.hour = get_RTC_register(0x04);
-            current_time.day = get_RTC_register(0x07);
-            current_time.month = get_RTC_register(0x08);
-            current_time.year = get_RTC_register(0x09);
-      } while( (last_sec != current_time.sec) || (last_min != current_time.min) || (last_hour != current_time.hour) || (last_day != current_time.day) || (last_month != current_time.month) || (last_year != current_time.year) );
  
       registerB = get_RTC_register(0x0B);
 
@@ -180,5 +159,5 @@ void read_rtc()
        current_time.year += (CURRENT_YEAR / 100) * 100;  
       if(current_time.year < CURRENT_YEAR) current_time.year += 100;
 
-      print_Time(current_time);
+      return current_time;
 }
