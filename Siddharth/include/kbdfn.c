@@ -3,9 +3,12 @@
 UInt8 spkeys[10]={0};
 /*
 	0 - CAPS_LOCK
-	1 - SHIFT_KEY
-	2 - CTRL KEY
-	3 - ALT KEY
+	1 - LEFT SHIFT KEY
+	2 - RIGHT SHIFT KEY
+	3 - LEFT CTRL KEY
+	4 - RIGHT CTRL KEY
+	5 - LEFT ALT KEY
+	6 - RIGHT ALT KEY
 */
 
 void toggle_caps()
@@ -13,35 +16,45 @@ void toggle_caps()
 	spkeys[0] = !spkeys[0];
 }
 
-void toggle_shift()
+void toggle_lshift()
 {
 	spkeys[1] = !spkeys[1];
 }
 
-void toggle_ctrl()
+void toggle_rshift()
 {
 	spkeys[2] = !spkeys[2];
 }
 
-void toggle_alt()
+void toggle_lctrl()
 {
 	spkeys[3] = !spkeys[3];
 }
 
+void toggle_rctrl()
+{
+	spkeys[4] = !spkeys[4];
+}
+
+void toggle_lalt()
+{
+	spkeys[5] = !spkeys[5];
+}
+
+void toggle_ralt()
+{
+	spkeys[6] = !spkeys[6];
+}
+
 void s_putch(char c)
 {
-	if (spkeys[0] && c >= 'a' && c <='z')
+	if ( spkeys[0]^(spkeys[1] || spkeys[2]) && c >= 'a' && c <='z')
 	{
 		c += 'A' - 'a';
 	}
 
-	else if (spkeys[1])
+	else if (spkeys[1] || spkeys[2])
 	{
-		if(c >= 'a' && c <='z')
-		{
-			c += 'A' - 'a';
-		}
-
 		switch(c)
 		{
 			case '1': c = '!'; break;
