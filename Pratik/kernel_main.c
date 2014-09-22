@@ -27,10 +27,11 @@ void main()
 	timer_install() ; 
 	keyboard_install() ;
 	__asm__ __volatile__ ("sti"); 
-	int state = 0 ; 
-	screen sc  ;  
-	//puts(&sc, "Hello world in new functions\n") ; 
-	print_int(&sc, state) ;  
+	print_text(&sc, "\t\t\t\t\tBITS - OS\t\t\t\t\t\n") ; 
+	print_text(&sc, "\t\tWelcome to our BITS Operating System\t\t\n") ; 
+	print_text(&sc, "\tWe have added support for US style keyboard,so you can type !\t\n") ;
+	print_text(&sc, "pratik@pratik:~ ") ;  
+	//int num = 5/0 ; 
 	/* Since there is no support for newlines in terminal_putchar yet, \n will
 	   produce some VGA specific character instead. This is normal. */
 }

@@ -1,5 +1,6 @@
 #include <interrupt.h> 
 #include <scrn.h>
+#include <exception.h> 
 #define UInt32 unsigned int  
 struct idt_entry idt[256];
 struct idt_ptr idtp;
@@ -162,7 +163,8 @@ void fault_handler(regs *r)
     if (r->int_no < 32)
     {
       print_text(&sc,exception_messages[r->int_no] );
-      print_text(&sc,"Exception. System Halted!\n");
+      print_text(&sc,"Exception. System Halted!\nDumping registers...");
+      dump_registers(r) ; 
         for (;;);
     }
 }
