@@ -3,13 +3,13 @@ curr_dir = $(shell pwd)
 inc_dir = $(curr_dir)/include
 lib_dir = $(curr_dir)/lib
 script = linker_script.ld
-target = proc_asm.o kernel_asm.o proc_c.o kernel.o io.o string.o
+target = proc_asm.o kernel_asm.o proc_c.o kernel.o io.o string.o idt.o exception.o  
 flags = -Wall -Werror -nostdinc -m32 -c -fno-builtin -I$(inc_dir)
 comp = g++
-sys_obj = proc_asm.o $(lib_dir)/proc_c.o kernel_asm.o kernel.o $(lib_dir)/io.o $(lib_dir)/string.o 
+sys_obj = proc_asm.o $(lib_dir)/proc_c.o kernel_asm.o kernel.o $(lib_dir)/io.o $(lib_dir)/string.o $(lib_dir)/idt.o $(lib_dir)/exception.o  
 all: $(target) 
-	ld -m elf_i386 -t $(script) -o kernel.bin $(sys_obj) -nostdlib
-	qemu-system-i386 -kernel kernel.bin 
+	ld -m elf_i386 -t $(script) -o kernel.bin $(sys_obj) -nostdlib -Map os.map
+	qemu-system-i386 -s -kernel kernel.bin 
 
 proc_asm.o: processor.asm 
 	nasm -f elf processor.asm -o proc_asm.o 
@@ -27,7 +27,10 @@ io.o: $(lib_dir)/io.c
 	$(comp) -o $(lib_dir)/io.o $(lib_dir)/io.c $(flags) 
 string.o: $(lib_dir)/string.c
 	$(comp) -o $(lib_dir)/string.o $(lib_dir)/string.c $(flags)
-
+idt.o: $(lib_dir)/idt.c
+	$(comp) -o $(lib_dir)/idt.o $(lib_dir)/idt.c $(flags) 
+exception.o: $(lib_dir)/exception.c
+	$(comp) -o $(lib_dir)/exception.o $(lib_dir)/exception.c $(flags) 
 clean:
 	rm -v $(lib_dir)/*.o 
 	rm -v *.o 

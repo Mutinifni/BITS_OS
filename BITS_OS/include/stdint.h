@@ -6,5 +6,6 @@
 #define int16_t signed short
 #define uint32_t unsigned int
 #define int32_t signed int
-#define size_t uint32_t  
+#define size_t uint32_t
+#define NULL 0   
 #endif 
