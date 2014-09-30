@@ -4,11 +4,9 @@
 short exception_nested = 0 ;  
 void divide_by_zero(breg val)
 {
-  exception_nested++ ; 
-  //disable_interrupts() ; 
-  print("Divide by zero exception raised..\n") ;
-  print(val.esp) ;
-  print("\n") ; 
+  exception_nested++ ;
+  disable_interrupts() ; 
+  print("Divide by zero exception raised..\nip = ")  ;
   if(exception_nested > 5)
     {
       for(;;) ; 

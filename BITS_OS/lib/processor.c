@@ -1,7 +1,7 @@
 #include <processor.h> 
 #include <stdint.h>
 #include <io.h> 
-breg reg_val ;    
+breg reg_val ;   
 extern "C" void get_breg_a(breg val)
 {
   reg_val.eax = val.eax ; 

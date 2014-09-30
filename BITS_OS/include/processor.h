@@ -23,5 +23,6 @@ extern "C" void get_eax_a(int) ;
 extern "C" void get_cs_a(unsigned int, short) ; 
 extern "C" void get_ip_a(int) ;  
 extern "C" void enable_interrupts() ; 
-extern "C" void disable_interrupts() ;     
+extern "C" void disable_interrupts() ;
+extern "C" void enable_protected_mode() ;      
 #endif 

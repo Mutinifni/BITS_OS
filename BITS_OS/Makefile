@@ -4,18 +4,29 @@ inc_dir = $(curr_dir)/include
 lib_dir = $(curr_dir)/lib
 script = linker_script.ld
 target = proc_asm.o kernel_asm.o proc_c.o kernel.o io.o string.o idt.o exception.o  
-flags = -Wall -Werror -nostdinc -m32 -c -fno-builtin -I$(inc_dir)
+flags = -Wall -Werror -nostdinc -m32 -c -g -fno-builtin -I$(inc_dir)  # -g for debugging information. 
 comp = g++
+REDIRECT = > /dev/null 2>&1
 sys_obj = proc_asm.o $(lib_dir)/proc_c.o kernel_asm.o kernel.o $(lib_dir)/io.o $(lib_dir)/string.o $(lib_dir)/idt.o $(lib_dir)/exception.o  
 all: $(target) 
-	ld -m elf_i386 -t $(script) -o kernel.bin $(sys_obj) -nostdlib -Map os.map
+	ld -m elf_i386  -t $(script) -o kernel.bin $(sys_obj) -nostdlib -Map os.map
+	mkdir -p isodir
+	mkdir -p isodir/boot
+	cp kernel.bin isodir/boot/kernel.bin
+	mkdir -p isodir/boot/grub
+	cp grub.cfg isodir/boot/grub/grub.cfg
+	grub-mkrescue -o kernel.iso isodir
+	#hdiutil convert -format UDRW -o kernel.img kernel.iso
+	dd if=kernel.iso of=kernel.img bs=512 count=1 $(REDIRECT)
+	dd if=/dev/zero of=kernel.img skip=1 seek=1 bs=512 count=2879 $(REDIRECT)
+	#sudo dd if=kernel.iso of=/dev/sda && sync
 	qemu-system-i386 -s -kernel kernel.bin 
 
 proc_asm.o: processor.asm 
-	nasm -f elf processor.asm -o proc_asm.o 
+	nasm -g -f elf processor.asm -o proc_asm.o 
 
 kernel_asm.o: start.asm
-	nasm -f elf start.asm -o kernel_asm.o 
+	nasm -g -f elf start.asm -o kernel_asm.o 
 
 proc_c.o: $(lib_dir)/processor.c
 	$(comp) -o $(lib_dir)/proc_c.o $(lib_dir)/processor.c $(flags)

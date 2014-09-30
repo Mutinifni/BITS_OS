@@ -13,9 +13,15 @@ global get_cs
 global get_ip
 global enable_interrupts
 global disable_interrupts
+global enable_protected_mode 
 global isr0
 global isr8
-extern idtp 
+extern idtp
+enable_protected_mode:
+	mov eax, cr0
+	inc ax
+	mov cr0, eax
+	ret 
 get_breg:	
 	pushad
 	call get_breg_a
@@ -37,11 +43,11 @@ enable_interrupts:
 disable_interrupts	:
 	cli
 	ret
-isr0:
-	pushad
+isr0: 
+	pushad 
 	mov eax, divide_by_zero 
-	call eax 
-	popad
+	call eax
+	popad 
 	ret 
 isr8:
 	pushad
