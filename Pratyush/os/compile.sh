@@ -38,6 +38,6 @@ echo Compiling rtc.c...
 g++ -g -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/rtc.o ./include/rtc.c
 
 echo Running linker script...
-ld -m elf_i386 -T link.ld -o kernel.bin main.o start.o ./include/*.o -nostdlib -Map os.map  
+ld -m elf_i386 -T link.ld -o kernel main.o start.o ./include/*.o -nostdlib -Map os.map  
 
 echo Done!

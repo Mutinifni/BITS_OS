@@ -221,7 +221,7 @@ LOAD ./include/print.o
 LOAD ./include/rtc.o
 LOAD ./include/scrn.o
 LOAD ./include/timer.o
-OUTPUT(kernel.bin binary)
+OUTPUT(kernel binary)
 
 .debug_info     0x0000000000000000     0x2539
  .debug_info    0x0000000000000000       0xe1 main.o
