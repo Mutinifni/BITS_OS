@@ -6,10 +6,9 @@ int main()
     idt_install();
     isrs_install();
     irq_install();
-    init_video();
     timer_install();
     keyboard_install();
-
+    init_video();
 
     __asm__ __volatile__ ("sti");
 

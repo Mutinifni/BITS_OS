@@ -49,8 +49,8 @@ unsigned char kbdus[128] =
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
 {
-    static UInt8 scancode;
-    static UInt8 flag;
+    static UInt8 scancode, flag;
+
     if(scancode == 224)
     {
         flag = 1;
@@ -59,7 +59,8 @@ void keyboard_handler(struct regs *r)
     else
         flag = 0;
 
-    /* Read from the keyboard's data buffer */
+    /* Read from the keyboard's data buffer 
+        0x60 is the register which contains data from keyboard */
     scancode = inportb(0x60);
 
     /* If the top bit of the byte we read from the keyboard is

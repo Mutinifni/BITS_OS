@@ -33,6 +33,7 @@ stublet:
 
 global gdt_flush
 extern gp
+
 gdt_flush:
     lgdt [gp]
     mov ax, 0x10

@@ -14,5 +14,8 @@ g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-fu
 g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I. -c -o memfn.o memfn.c
 g++ -march=i386 -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I. -c -o kbdfn.o kbdfn.c
 cd ..
-ld -m elf_i386 -T link.ld -o kernel.bin *.o */*.o
+ld -m elf_i386 -T link.ld -o kernel *.o */*.o
+sudo ./update_image.sh
+sudo ./run_bochs.sh
+rm ./kernel
 rm *.o */*.o
