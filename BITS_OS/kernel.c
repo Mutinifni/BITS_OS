@@ -20,10 +20,10 @@ extern "C" void kernel_main()
   print("IDT installed succesfully\n") ;
   print("\n") ;
   //enable_protected_mode() ; 
-  int num1 = 5;
-  int num2 = 0;
-  int num3 = num1/num2 ;
-  print("num3 = ") ;
-  print(num3) ;
+  // int num1 = 5;
+  // int num2 = 0;
+  // int num3 = num1/num2 ;
+  // print("num3 = ") ;
+  // print(num3) ;
   for(;;)  ;
 } 
