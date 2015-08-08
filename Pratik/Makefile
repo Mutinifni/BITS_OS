@@ -12,7 +12,7 @@ kernel_obj =  lib/kernel/initialize.o lib/kernel/exception.o lib/kernel/scrn.o l
 clib_obj = lib/clib/string.o 
 all: kernel_main.o kernel.o gdt.o initialize.o scrn.o exception.o system.o string.o interrupt.o irq.o keyboard.o timer.o 
 	ld -m elf_i386 -T  link.ld -o myos.bin -nostdlib  $(top_level_obj) $(kernel_obj) $(clib_obj) $(driver_obj)
-	qemu-system-i386 -kernel myos.bin
+	#qemu-system-i386 -kernel myos.bin
 timer.o: $(libdir)timer.c
 	gcc -o $(libdir)timer.o $(libdir)timer.c -Wall -std=c99 -nostdinc -Werror -fno-builtin -Wall -m32 -c -I$(includedir) -I$(include_cdir) -I$(include_drive_dir)
 keyboard.o: $(current_dir)/lib/driver/keyboard.c

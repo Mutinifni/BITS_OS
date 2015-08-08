@@ -1,5 +1,4 @@
 #include "system.h"
-
 extern int timer_ticks;
 
 /* KBDUS means US Keyboard Layout. This is a scancode table
