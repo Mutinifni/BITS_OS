@@ -11,7 +11,7 @@ driver_obj = lib/driver/keyboard.o
 kernel_obj =  lib/kernel/initialize.o lib/kernel/exception.o lib/kernel/scrn.o lib/kernel/timer.o lib/kernel/system.o lib/kernel/gdt.o lib/kernel/interrupt.o lib/kernel/irq.o 
 clib_obj = lib/clib/string.o 
 all: kernel_main.o kernel.o gdt.o initialize.o scrn.o exception.o system.o string.o interrupt.o irq.o keyboard.o timer.o 
-	ld -m elf_i386 -T  link.ld -o myos.bin -nostdlib $(top_level_obj) $(kernel_obj) $(clib_obj) $(driver_obj) 
+	ld -m elf_i386 -T  link.ld -o myos.bin -nostdlib  $(top_level_obj) $(kernel_obj) $(clib_obj) $(driver_obj)
 	qemu-system-i386 -kernel myos.bin
 timer.o: $(libdir)timer.c
 	gcc -o $(libdir)timer.o $(libdir)timer.c -Wall -std=c99 -nostdinc -Werror -fno-builtin -Wall -m32 -c -I$(includedir) -I$(include_cdir) -I$(include_drive_dir)
@@ -31,7 +31,7 @@ scrn.o: $(libdir)scrn.c
 	gcc -o $(libdir)scrn.o $(libdir)scrn.c  -m32 -c -nostdinc  -std=c99 -Werror -I$(includedir) -I$(include_cdir) -Wall -fno-builtin 
 kernel.o: start.asm
 interrupt.o: $(libdir)interrupt.c 
-	gcc -o $(libdir)interrupt.o $(libdir)interrupt.c -m32 -c -nostdinc -std=c99 -Werror -I$(includedir) -I$(include_cdir) -Wall -fno-builtin 
+	gcc -o $(libdir)interrupt.o $(libdir)interrupt.c -m32 -c -nostdinc -std=c99 -Werror -I$(includedir) -I$(include_cdir) -Wall -fno-builtin -fno-stack-protector
 	nasm -f elf -o kernel.o start.asm
 string.o: $(lib_cdir)string.c
 	gcc -o $(lib_cdir)string.o $(lib_cdir)string.c -m32 -c -nostdinc -std=c99 -Werror -I$(includedir) -I$(include_cdir) -Wall -fno-builtin  
