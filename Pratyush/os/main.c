@@ -10,7 +10,11 @@ int main()
     keyboard_install();
     __asm__ __volatile__ ("sti"); // Re-enable interrupts command (opposite of cli)	
     init_video();
-    //print_Time(read_rtc());
+    print("\t\t\t\tBITS - OS\t\t") ;
+    print_Time(read_rtc());     
+    print("\t\t\tWelcome to our BITS Operating System\t\t\n") ; 
+    print("\tWe have added support for US style keyboard,so you can type !\t\n");
+    print("root@cyborg:# ");    
     //int f = 5;
     //int k = 0;
     //print(f/k);

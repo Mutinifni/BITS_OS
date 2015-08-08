@@ -11,182 +11,187 @@ Linker script and memory map
 .text           0x0000000000100000     0x2000
                 0x0000000000100000                code = .
  *(.text)
- .text          0x0000000000100000       0x2c main.o
+ .text          0x0000000000100000       0x89 main.o
                 0x0000000000100000                main
- *fill*         0x000000000010002c        0x4 
- .text          0x0000000000100030      0x20f start.o
-                0x0000000000100030                start
-                0x000000000010005f                gdt_flush
-                0x000000000010007c                idt_load
-                0x0000000000100084                isr0
-                0x000000000010008e                isr1
-                0x0000000000100098                isr2
-                0x00000000001000a2                isr3
-                0x00000000001000ac                isr4
-                0x00000000001000b6                isr5
-                0x00000000001000c0                isr6
-                0x00000000001000ca                isr7
-                0x00000000001000d4                isr8
-                0x00000000001000dc                isr9
-                0x00000000001000e6                isr10
-                0x00000000001000ee                isr11
-                0x00000000001000f6                isr12
-                0x00000000001000fe                isr13
-                0x0000000000100103                isr14
-                0x0000000000100108                isr15
-                0x000000000010010f                isr16
-                0x0000000000100116                isr17
-                0x000000000010011d                isr18
-                0x0000000000100124                isr19
-                0x000000000010012b                isr20
-                0x0000000000100132                isr21
-                0x0000000000100139                isr22
-                0x0000000000100140                isr23
-                0x0000000000100147                isr24
-                0x000000000010014e                isr25
-                0x0000000000100155                isr26
-                0x000000000010015c                isr27
-                0x0000000000100163                isr28
-                0x000000000010016a                isr29
-                0x0000000000100171                isr30
-                0x0000000000100178                isr31
-                0x00000000001001a6                irq0
-                0x00000000001001ad                irq1
-                0x00000000001001b4                irq2
-                0x00000000001001bb                irq3
-                0x00000000001001c2                irq4
-                0x00000000001001c9                irq5
-                0x00000000001001d0                irq6
-                0x00000000001001d7                irq7
-                0x00000000001001de                irq8
-                0x00000000001001e5                irq9
-                0x00000000001001ec                irq10
-                0x00000000001001f3                irq11
-                0x00000000001001fa                irq12
-                0x0000000000100201                irq13
-                0x0000000000100208                irq14
-                0x000000000010020f                irq15
- .text          0x000000000010023f       0xf9 ./include/gdt.o
-                0x000000000010023f                gdt_set_gate(int, unsigned long, unsigned long, unsigned char, unsigned char)
-                0x0000000000100295                gdt_install()
- .text          0x0000000000100338       0x77 ./include/idt.o
-                0x0000000000100338                idt_set_gate(unsigned char, unsigned long, unsigned short, unsigned char)
-                0x0000000000100374                idt_install()
- .text          0x00000000001003af      0x389 ./include/irq.o
-                0x00000000001003af                irq_install_handler(int, void (*)(regs*))
-                0x00000000001003bf                irq_uninstall_handler(int)
-                0x00000000001003cf                irq_remap()
-                0x000000000010049e                irq_install()
-                0x00000000001006ea                irq_handler
- .text          0x0000000000100738      0x4b7 ./include/isrs.o
-                0x0000000000100738                isrs_install()
-                0x0000000000100bbf                fault_handler
- .text          0x0000000000100bef      0x13d ./include/kbdfn.o
-                0x0000000000100bef                toggle_caps()
-                0x0000000000100bfe                toggle_l_shift()
-                0x0000000000100c0d                toggle_l_ctrl()
-                0x0000000000100c1c                toggle_l_alt()
-                0x0000000000100c2b                toggle_r_shift()
-                0x0000000000100c3a                toggle_r_ctrl()
-                0x0000000000100c49                toggle_r_alt()
-                0x0000000000100c58                s_putch(char)
- .text          0x0000000000100d2c      0x165 ./include/kb.o
-                0x0000000000100d2c                keyboard_handler(regs*)
-                0x0000000000100e76                keyboard_install()
- .text          0x0000000000100e91       0x8f ./include/memfn.o
-                0x0000000000100e91                memcpy(void*, void const*, int)
-                0x0000000000100eb6                memset(void*, char, int)
-                0x0000000000100ed5                memsetw(unsigned short*, unsigned short, int)
-                0x0000000000100ef4                strlen(char const*)
-                0x0000000000100f10                inportb(unsigned short)
-                0x0000000000100f16                outportb(unsigned short, unsigned char)
- .text          0x0000000000100f20      0x25e ./include/print.o
-                0x0000000000100f20                print(int)
-                0x0000000000100f8a                print(unsigned int)
-                0x0000000000100fd1                print(long)
-                0x000000000010103b                print(float)
-                0x00000000001010ae                print(double)
-                0x000000000010114f                print(char const*)
- .text          0x000000000010117e      0x39f ./include/rtc.o
-                0x000000000010117e                print_Time(Time)
-                0x000000000010120e                is_leap_year(unsigned int)
-                0x000000000010122b                add_Time(Time*, Time*)
-                0x0000000000101355                get_update_in_progress_flag()
-                0x0000000000101382                get_RTC_register(int)
-                0x00000000001013aa                read_rtc()
- .text          0x000000000010151d      0x309 ./include/scrn.o
-                0x000000000010151d                scroll()
-                0x000000000010159a                move_csr()
-                0x0000000000101602                cls()
-                0x0000000000101664                putch(unsigned char)
-                0x0000000000101769                settextcolor(unsigned char, unsigned char)
-                0x0000000000101780                arrow_keys(char)
-                0x0000000000101810                init_video()
- .text          0x0000000000101826       0x34 ./include/timer.o
-                0x0000000000101826                timer_handler(regs*)
-                0x000000000010182d                timer_wait(int)
-                0x000000000010183f                timer_install()
+ *fill*         0x0000000000100089        0x7 
+ .text          0x0000000000100090      0x20f start.o
+                0x0000000000100090                start
+                0x00000000001000bf                gdt_flush
+                0x00000000001000dc                idt_load
+                0x00000000001000e4                isr0
+                0x00000000001000ee                isr1
+                0x00000000001000f8                isr2
+                0x0000000000100102                isr3
+                0x000000000010010c                isr4
+                0x0000000000100116                isr5
+                0x0000000000100120                isr6
+                0x000000000010012a                isr7
+                0x0000000000100134                isr8
+                0x000000000010013c                isr9
+                0x0000000000100146                isr10
+                0x000000000010014e                isr11
+                0x0000000000100156                isr12
+                0x000000000010015e                isr13
+                0x0000000000100163                isr14
+                0x0000000000100168                isr15
+                0x000000000010016f                isr16
+                0x0000000000100176                isr17
+                0x000000000010017d                isr18
+                0x0000000000100184                isr19
+                0x000000000010018b                isr20
+                0x0000000000100192                isr21
+                0x0000000000100199                isr22
+                0x00000000001001a0                isr23
+                0x00000000001001a7                isr24
+                0x00000000001001ae                isr25
+                0x00000000001001b5                isr26
+                0x00000000001001bc                isr27
+                0x00000000001001c3                isr28
+                0x00000000001001ca                isr29
+                0x00000000001001d1                isr30
+                0x00000000001001d8                isr31
+                0x0000000000100206                irq0
+                0x000000000010020d                irq1
+                0x0000000000100214                irq2
+                0x000000000010021b                irq3
+                0x0000000000100222                irq4
+                0x0000000000100229                irq5
+                0x0000000000100230                irq6
+                0x0000000000100237                irq7
+                0x000000000010023e                irq8
+                0x0000000000100245                irq9
+                0x000000000010024c                irq10
+                0x0000000000100253                irq11
+                0x000000000010025a                irq12
+                0x0000000000100261                irq13
+                0x0000000000100268                irq14
+                0x000000000010026f                irq15
+ .text          0x000000000010029f       0xb4 ./include/gdt.o
+                0x000000000010029f                gdt_set_gate(int, unsigned long, unsigned long, unsigned char, unsigned char)
+                0x00000000001002f5                gdt_install()
+ .text          0x0000000000100353       0x6f ./include/idt.o
+                0x0000000000100353                idt_set_gate(unsigned char, unsigned long, unsigned short, unsigned char)
+                0x000000000010038f                idt_install()
+ .text          0x00000000001003c2      0x25c ./include/irq.o
+                0x00000000001003c2                irq_install_handler(int, void (*)(regs*))
+                0x00000000001003d2                irq_uninstall_handler(int)
+                0x00000000001003e2                irq_remap()
+                0x000000000010046d                irq_install()
+                0x00000000001005d6                irq_handler
+ .text          0x000000000010061e      0x2f7 ./include/isrs.o
+                0x000000000010061e                isrs_install()
+                0x00000000001008e2                fault_handler
+ .text          0x0000000000100915      0x17b ./include/kbdfn.o
+                0x0000000000100915                toggle_caps()
+                0x0000000000100924                toggle_l_shift()
+                0x0000000000100933                toggle_l_ctrl()
+                0x0000000000100942                toggle_l_alt()
+                0x0000000000100951                toggle_r_shift()
+                0x0000000000100960                toggle_r_ctrl()
+                0x000000000010096f                toggle_r_alt()
+                0x000000000010097e                s_putch(char)
+ .text          0x0000000000100a90      0x169 ./include/kb.o
+                0x0000000000100a90                keyboard_handler(regs*)
+                0x0000000000100be6                keyboard_install()
+ .text          0x0000000000100bf9       0x8f ./include/memfn.o
+                0x0000000000100bf9                memcpy(void*, void const*, int)
+                0x0000000000100c1e                memset(void*, char, int)
+                0x0000000000100c3d                memsetw(unsigned short*, unsigned short, int)
+                0x0000000000100c5c                strlen(char const*)
+                0x0000000000100c78                inportb(unsigned short)
+                0x0000000000100c7e                outportb(unsigned short, unsigned char)
+ .text          0x0000000000100c88      0x28b ./include/print.o
+                0x0000000000100c88                print(int)
+                0x0000000000100cfc                print(unsigned int)
+                0x0000000000100d48                print(long)
+                0x0000000000100dbc                print(float)
+                0x0000000000100e37                print(double)
+                0x0000000000100edc                print(char const*)
+ .text          0x0000000000100f13      0x38e ./include/rtc.o
+                0x0000000000100f13                print_Time(Time)
+                0x0000000000100fa1                is_leap_year(unsigned int)
+                0x0000000000100fbe                add_Time(Time*, Time*)
+                0x00000000001010ea                get_update_in_progress_flag()
+                0x000000000010110c                get_RTC_register(int)
+                0x000000000010112c                read_rtc()
+ .text          0x00000000001012a1      0x2e9 ./include/scrn.o
+                0x00000000001012a1                scroll()
+                0x0000000000101314                move_csr()
+                0x000000000010136b                cls()
+                0x00000000001013c8                putch(unsigned char)
+                0x00000000001014cd                settextcolor(unsigned char, unsigned char)
+                0x00000000001014e4                arrow_keys(char)
+                0x0000000000101574                init_video()
+ .text          0x000000000010158a       0x2c ./include/timer.o
+                0x000000000010158a                timer_handler(regs*)
+                0x0000000000101591                timer_wait(int)
+                0x00000000001015a3                timer_install()
  *(.rodata)
- *fill*         0x000000000010185a        0x2 
- .rodata        0x000000000010185c       0xdc ./include/kbdfn.o
- .rodata        0x0000000000101938       0xd0 ./include/kb.o
- .rodata        0x0000000000101a08       0x40 ./include/rtc.o
+ *fill*         0x00000000001015b6        0x2 
+ .rodata        0x00000000001015b8       0xdc ./include/kbdfn.o
+ .rodata        0x0000000000101694       0xd0 ./include/kb.o
+ .rodata        0x0000000000101764       0x40 ./include/rtc.o
                 0x0000000000102000                . = ALIGN (0x1000)
- *fill*         0x0000000000101a48      0x5b8 
+ *fill*         0x00000000001017a4      0x85c 
 
-.eh_frame       0x0000000000102000      0x6b4
- .eh_frame      0x0000000000102000       0x34 main.o
- .eh_frame      0x0000000000102034       0x4c ./include/gdt.o
- .eh_frame      0x0000000000102080       0x44 ./include/idt.o
- .eh_frame      0x00000000001020c4       0x98 ./include/irq.o
- .eh_frame      0x000000000010215c       0x4c ./include/isrs.o
- .eh_frame      0x00000000001021a8       0xd0 ./include/kbdfn.o
- .eh_frame      0x0000000000102278       0x4c ./include/kb.o
- .eh_frame      0x00000000001022c4       0xa8 ./include/memfn.o
- .eh_frame      0x000000000010236c      0x100 ./include/print.o
- .eh_frame      0x000000000010246c       0xf4 ./include/rtc.o
- .eh_frame      0x0000000000102560       0xfc ./include/scrn.o
- .eh_frame      0x000000000010265c       0x58 ./include/timer.o
-
-.rodata.str1.1  0x00000000001026b4      0x15e
+.rodata.str1.1  0x0000000000102000      0x17d
  .rodata.str1.1
-                0x00000000001026b4      0x158 ./include/isrs.o
+                0x0000000000102000       0x1f main.o
  .rodata.str1.1
-                0x000000000010280c        0x6 ./include/rtc.o
+                0x000000000010201f      0x158 ./include/isrs.o
+ .rodata.str1.1
+                0x0000000000102177        0x6 ./include/rtc.o
 
-.rodata.cst4    0x0000000000102814        0x8
- .rodata.cst4   0x0000000000102814        0x8 ./include/print.o
+.rodata.str1.4  0x0000000000102180       0x6d
+ .rodata.str1.4
+                0x0000000000102180       0x6d main.o
 
-.data           0x0000000000102820      0x7e0
-                0x0000000000102820                data = .
+.eh_frame       0x00000000001021f0      0xb5c
+ .eh_frame      0x00000000001021f0       0x44 main.o
+ .eh_frame      0x0000000000102234       0x80 ./include/gdt.o
+ .eh_frame      0x00000000001022b4       0x50 ./include/idt.o
+ .eh_frame      0x0000000000102304      0x1f4 ./include/irq.o
+ .eh_frame      0x00000000001024f8      0x22c ./include/isrs.o
+ .eh_frame      0x0000000000102724       0xd8 ./include/kbdfn.o
+ .eh_frame      0x00000000001027fc       0x88 ./include/kb.o
+ .eh_frame      0x0000000000102884       0xa8 ./include/memfn.o
+ .eh_frame      0x000000000010292c      0x150 ./include/print.o
+ .eh_frame      0x0000000000102a7c      0x128 ./include/rtc.o
+ .eh_frame      0x0000000000102ba4      0x148 ./include/scrn.o
+ .eh_frame      0x0000000000102cec       0x60 ./include/timer.o
+
+.rodata.cst4    0x0000000000102d4c        0x8
+ .rodata.cst4   0x0000000000102d4c        0x8 ./include/print.o
+
+.data           0x0000000000102d60      0x2a0
+                0x0000000000102d60                data = .
  *(.data)
- .data          0x0000000000102820        0x0 main.o
- .data          0x0000000000102820        0x0 ./include/gdt.o
- .data          0x0000000000102820        0x0 ./include/idt.o
- .data          0x0000000000102820        0x0 ./include/irq.o
- .data          0x0000000000102820       0x80 ./include/isrs.o
-                0x0000000000102820                exception_messages
- .data          0x00000000001028a0        0x0 ./include/kbdfn.o
- .data          0x00000000001028a0       0x80 ./include/kb.o
-                0x00000000001028a0                kbdus
- .data          0x0000000000102920        0x0 ./include/memfn.o
- .data          0x0000000000102920        0x0 ./include/print.o
- .data          0x0000000000102920        0x0 ./include/rtc.o
- .data          0x0000000000102920        0x4 ./include/scrn.o
-                0x0000000000102920                attrib
- .data          0x0000000000102924        0x0 ./include/timer.o
+ .data          0x0000000000102d60        0x0 main.o
+ .data          0x0000000000102d60        0x0 ./include/gdt.o
+ .data          0x0000000000102d60        0x0 ./include/idt.o
+ .data          0x0000000000102d60        0x0 ./include/irq.o
+ .data          0x0000000000102d60       0x80 ./include/isrs.o
+                0x0000000000102d60                exception_messages
+ .data          0x0000000000102de0        0x0 ./include/kbdfn.o
+ .data          0x0000000000102de0       0x80 ./include/kb.o
+                0x0000000000102de0                kbdus
+ .data          0x0000000000102e60        0x0 ./include/memfn.o
+ .data          0x0000000000102e60        0x0 ./include/print.o
+ .data          0x0000000000102e60        0x0 ./include/rtc.o
+ .data          0x0000000000102e60        0x4 ./include/scrn.o
+                0x0000000000102e60                attrib
+ .data          0x0000000000102e64        0x0 ./include/timer.o
                 0x0000000000103000                . = ALIGN (0x1000)
- *fill*         0x0000000000102924      0x6dc 
+ *fill*         0x0000000000102e64      0x19c 
 
 .bss            0x0000000000103000     0x3000
                 0x0000000000103000                bss = .
  *(.bss)
  .bss           0x0000000000103000        0x0 main.o
  .bss           0x0000000000103000     0x2000 start.o
- .bss           0x0000000000105000       0x1e ./include/gdt.o
+ .bss           0x0000000000105000       0x20 ./include/gdt.o
                 0x0000000000105000                gp
-                0x0000000000105006                gdt
- *fill*         0x000000000010501e        0x2 
+                0x0000000000105008                gdt
  .bss           0x0000000000105020      0x820 ./include/idt.o
                 0x0000000000105020                idtp
                 0x0000000000105040                idt
@@ -223,33 +228,33 @@ LOAD ./include/scrn.o
 LOAD ./include/timer.o
 OUTPUT(kernel binary)
 
-.debug_info     0x0000000000000000     0x2539
- .debug_info    0x0000000000000000       0xe1 main.o
- .debug_info    0x00000000000000e1      0x213 ./include/gdt.o
- .debug_info    0x00000000000002f4      0x1cd ./include/idt.o
- .debug_info    0x00000000000004c1      0x5f6 ./include/irq.o
- .debug_info    0x0000000000000ab7      0x61e ./include/isrs.o
- .debug_info    0x00000000000010d5      0x13e ./include/kbdfn.o
- .debug_info    0x0000000000001213      0x386 ./include/kb.o
- .debug_info    0x0000000000001599      0x265 ./include/memfn.o
- .debug_info    0x00000000000017fe      0x2ec ./include/print.o
- .debug_info    0x0000000000001aea      0x4b7 ./include/rtc.o
- .debug_info    0x0000000000001fa1      0x399 ./include/scrn.o
- .debug_info    0x000000000000233a      0x1ff ./include/timer.o
+.debug_info     0x0000000000000000     0x1d57
+ .debug_info    0x0000000000000000      0x1b3 main.o
+ .debug_info    0x00000000000001b3      0x1a4 ./include/gdt.o
+ .debug_info    0x0000000000000357      0x1b0 ./include/idt.o
+ .debug_info    0x0000000000000507      0x385 ./include/irq.o
+ .debug_info    0x000000000000088c      0x317 ./include/isrs.o
+ .debug_info    0x0000000000000ba3      0x13e ./include/kbdfn.o
+ .debug_info    0x0000000000000ce1      0x339 ./include/kb.o
+ .debug_info    0x000000000000101a      0x265 ./include/memfn.o
+ .debug_info    0x000000000000127f      0x27d ./include/print.o
+ .debug_info    0x00000000000014fc      0x371 ./include/rtc.o
+ .debug_info    0x000000000000186d      0x2fc ./include/scrn.o
+ .debug_info    0x0000000000001b69      0x1ee ./include/timer.o
 
-.debug_abbrev   0x0000000000000000      0xc5c
- .debug_abbrev  0x0000000000000000       0x60 main.o
- .debug_abbrev  0x0000000000000060       0xd8 ./include/gdt.o
- .debug_abbrev  0x0000000000000138      0x128 ./include/idt.o
- .debug_abbrev  0x0000000000000260      0x14d ./include/irq.o
- .debug_abbrev  0x00000000000003ad      0x125 ./include/isrs.o
- .debug_abbrev  0x00000000000004d2       0xb1 ./include/kbdfn.o
- .debug_abbrev  0x0000000000000583      0x138 ./include/kb.o
- .debug_abbrev  0x00000000000006bb       0xf9 ./include/memfn.o
- .debug_abbrev  0x00000000000007b4      0x11c ./include/print.o
- .debug_abbrev  0x00000000000008d0      0x163 ./include/rtc.o
- .debug_abbrev  0x0000000000000a33      0x132 ./include/scrn.o
- .debug_abbrev  0x0000000000000b65       0xf7 ./include/timer.o
+.debug_abbrev   0x0000000000000000      0xbb6
+ .debug_abbrev  0x0000000000000000       0xdb main.o
+ .debug_abbrev  0x00000000000000db       0xbf ./include/gdt.o
+ .debug_abbrev  0x000000000000019a      0x10f ./include/idt.o
+ .debug_abbrev  0x00000000000002a9      0x11e ./include/irq.o
+ .debug_abbrev  0x00000000000003c7      0x101 ./include/isrs.o
+ .debug_abbrev  0x00000000000004c8       0xb1 ./include/kbdfn.o
+ .debug_abbrev  0x0000000000000579      0x114 ./include/kb.o
+ .debug_abbrev  0x000000000000068d       0xf9 ./include/memfn.o
+ .debug_abbrev  0x0000000000000786       0xf8 ./include/print.o
+ .debug_abbrev  0x000000000000087e      0x13f ./include/rtc.o
+ .debug_abbrev  0x00000000000009bd      0x10e ./include/scrn.o
+ .debug_abbrev  0x0000000000000acb       0xeb ./include/timer.o
 
 .debug_aranges  0x0000000000000000      0x180
  .debug_aranges
@@ -277,47 +282,47 @@ OUTPUT(kernel binary)
  .debug_aranges
                 0x0000000000000160       0x20 ./include/timer.o
 
-.debug_line     0x0000000000000000      0x680
- .debug_line    0x0000000000000000       0x52 main.o
- .debug_line    0x0000000000000052       0x55 ./include/gdt.o
- .debug_line    0x00000000000000a7       0x57 ./include/idt.o
- .debug_line    0x00000000000000fe       0xa5 ./include/irq.o
- .debug_line    0x00000000000001a3       0xb4 ./include/isrs.o
- .debug_line    0x0000000000000257       0x9d ./include/kbdfn.o
- .debug_line    0x00000000000002f4       0x7b ./include/kb.o
- .debug_line    0x000000000000036f       0x75 ./include/memfn.o
- .debug_line    0x00000000000003e4       0xaa ./include/print.o
- .debug_line    0x000000000000048e       0xc0 ./include/rtc.o
- .debug_line    0x000000000000054e       0xdb ./include/scrn.o
- .debug_line    0x0000000000000629       0x57 ./include/timer.o
+.debug_line     0x0000000000000000      0x655
+ .debug_line    0x0000000000000000       0x60 main.o
+ .debug_line    0x0000000000000060       0x51 ./include/gdt.o
+ .debug_line    0x00000000000000b1       0x57 ./include/idt.o
+ .debug_line    0x0000000000000108       0x8a ./include/irq.o
+ .debug_line    0x0000000000000192       0x99 ./include/isrs.o
+ .debug_line    0x000000000000022b       0x9c ./include/kbdfn.o
+ .debug_line    0x00000000000002c7       0x7a ./include/kb.o
+ .debug_line    0x0000000000000341       0x78 ./include/memfn.o
+ .debug_line    0x00000000000003b9       0xac ./include/print.o
+ .debug_line    0x0000000000000465       0xc0 ./include/rtc.o
+ .debug_line    0x0000000000000525       0xda ./include/scrn.o
+ .debug_line    0x00000000000005ff       0x56 ./include/timer.o
 
-.debug_str      0x0000000000000000     0x161c
- .debug_str     0x0000000000000000      0x19c main.o
- .debug_str     0x000000000000019c      0x19d ./include/gdt.o
- .debug_str     0x0000000000000339      0x19e ./include/idt.o
- .debug_str     0x00000000000004d7      0x210 ./include/irq.o
- .debug_str     0x00000000000006e7      0x193 ./include/isrs.o
- .debug_str     0x000000000000087a      0x1e5 ./include/kbdfn.o
- .debug_str     0x0000000000000a5f      0x2cf ./include/kb.o
- .debug_str     0x0000000000000d2e      0x18d ./include/memfn.o
- .debug_str     0x0000000000000ebb      0x15e ./include/print.o
- .debug_str     0x0000000000001019      0x25f ./include/rtc.o
- .debug_str     0x0000000000001278      0x205 ./include/scrn.o
- .debug_str     0x000000000000147d      0x19f ./include/timer.o
+.debug_str      0x0000000000000000     0x16a1
+ .debug_str     0x0000000000000000      0x200 main.o
+ .debug_str     0x0000000000000200      0x1a0 ./include/gdt.o
+ .debug_str     0x00000000000003a0      0x1a1 ./include/idt.o
+ .debug_str     0x0000000000000541      0x213 ./include/irq.o
+ .debug_str     0x0000000000000754      0x196 ./include/isrs.o
+ .debug_str     0x00000000000008ea      0x1e8 ./include/kbdfn.o
+ .debug_str     0x0000000000000ad2      0x2d2 ./include/kb.o
+ .debug_str     0x0000000000000da4      0x190 ./include/memfn.o
+ .debug_str     0x0000000000000f34      0x161 ./include/print.o
+ .debug_str     0x0000000000001095      0x262 ./include/rtc.o
+ .debug_str     0x00000000000012f7      0x208 ./include/scrn.o
+ .debug_str     0x00000000000014ff      0x1a2 ./include/timer.o
 
-.comment        0x0000000000000000      0x1bc
- .comment       0x0000000000000000       0x25 main.o
- .comment       0x0000000000000025       0x25 ./include/gdt.o
- .comment       0x000000000000004a       0x25 ./include/idt.o
- .comment       0x000000000000006f       0x25 ./include/irq.o
- .comment       0x0000000000000094       0x25 ./include/isrs.o
- .comment       0x00000000000000b9       0x25 ./include/kbdfn.o
- .comment       0x00000000000000de       0x25 ./include/kb.o
- .comment       0x0000000000000103       0x25 ./include/memfn.o
- .comment       0x0000000000000128       0x25 ./include/print.o
- .comment       0x000000000000014d       0x25 ./include/rtc.o
- .comment       0x0000000000000172       0x25 ./include/scrn.o
- .comment       0x0000000000000197       0x25 ./include/timer.o
+.comment        0x0000000000000000      0x1c8
+ .comment       0x0000000000000000       0x26 main.o
+ .comment       0x0000000000000026       0x26 ./include/gdt.o
+ .comment       0x000000000000004c       0x26 ./include/idt.o
+ .comment       0x0000000000000072       0x26 ./include/irq.o
+ .comment       0x0000000000000098       0x26 ./include/isrs.o
+ .comment       0x00000000000000be       0x26 ./include/kbdfn.o
+ .comment       0x00000000000000e4       0x26 ./include/kb.o
+ .comment       0x000000000000010a       0x26 ./include/memfn.o
+ .comment       0x0000000000000130       0x26 ./include/print.o
+ .comment       0x0000000000000156       0x26 ./include/rtc.o
+ .comment       0x000000000000017c       0x26 ./include/scrn.o
+ .comment       0x00000000000001a2       0x26 ./include/timer.o
 
 .note.GNU-stack
                 0x0000000000000000        0x0
@@ -352,11 +357,11 @@ OUTPUT(kernel binary)
 .stabstr        0x0000000000000000        0xb
  .stabstr       0x0000000000000000        0xb start.o
 
-.debug_loc      0x0000000000000000      0x715
+.debug_loc      0x0000000000000000      0x795
  .debug_loc     0x0000000000000000       0x13 ./include/irq.o
- .debug_loc     0x0000000000000013      0x138 ./include/kbdfn.o
- .debug_loc     0x000000000000014b      0x208 ./include/memfn.o
- .debug_loc     0x0000000000000353      0x15a ./include/print.o
- .debug_loc     0x00000000000004ad      0x12b ./include/rtc.o
- .debug_loc     0x00000000000005d8      0x119 ./include/scrn.o
- .debug_loc     0x00000000000006f1       0x24 ./include/timer.o
+ .debug_loc     0x0000000000000013      0x144 ./include/kbdfn.o
+ .debug_loc     0x0000000000000157      0x214 ./include/memfn.o
+ .debug_loc     0x000000000000036b      0x1a8 ./include/print.o
+ .debug_loc     0x0000000000000513      0x145 ./include/rtc.o
+ .debug_loc     0x0000000000000658      0x119 ./include/scrn.o
+ .debug_loc     0x0000000000000771       0x24 ./include/timer.o
