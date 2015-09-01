@@ -1,4 +1,4 @@
-<h1>Development page for Operating System.</h1>
+<h1>Development page for BITS Operating System.</h1>
 
 <h3>Notes :<br></h3>
 1. Add files in your personal folders for now, we will collaborate(in addition to other changes) files eventually when we are all on the same page.<br>

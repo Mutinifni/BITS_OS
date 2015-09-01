@@ -1,7 +1,5 @@
 #include "system.h"	 
 
-char rando[100] = { };
-int ccount =0;
 char spkeys[10]={0};
 /*
 	0 - CAPS_LOCK
@@ -55,44 +53,6 @@ void s_putch(char c)
 	{
 		c += 'A' - 'a';
 	}
-	else if (c == '\n')
-	{
-		ccount = 0;
-		char str[] = {"cls"};
-		char str2[] ={"ls"};
-		if (match(str, 3) == 1)
-		{
-			cls();
-			print("\t\t\t\tBITS - OS\t\t") ;
-    		print_Time(read_rtc());     
-    		print("\t\t\tWelcome to our BITS Operating System\t\t\n") ; 
-    		print("\tWe have added support for US style keyboard,so you can type !\t\n");
-    		print("root@cyborg:# "); 
-    	}
-    	else if (match(str2,2) == 1)
-    	{
-    		cls();
-			print("\t\t\t\tBITS - OS\t\t") ;
-    		print_Time(read_rtc());     
-    		print("\t\t\tWelcome to our BITS Operating System\t\t\n") ; 
-    		print("\tWe have added support for US style keyboard,so you can type !\t\n");
-    		print("root@cyborg:# "); 
-    		print("\nfile.c kernel /boot/bzImage /grub /home/pratyush\n");
-    		print("root@cyborg:# "); 
-    	}
-    	else
-    	{
-    		cls();
-			print("\t\t\t\tBITS - OS\t\t") ;
-    		print_Time(read_rtc());     
-    		print("\t\t\tWelcome to our BITS Operating System\t\t\n") ; 
-    		print("\tWe have added support for US style keyboard,so you can type !\t\n");
-    		print("\nThe command you entered is not implemented yet\n");
-    		print("root@cyborg:# ");
-    		putch('\n');
-    	}
-    	return ;
-	}
 	else if (spkeys[1] || spkeys[2])
 	{
 		if(c >= 'a' && c <='z' && !spkeys[0])
@@ -127,21 +87,6 @@ void s_putch(char c)
 	}
 
 	putch(c);
-	rando[ccount++] = c;
 
 	return ;
-}
-
-int match(char* ptr1, int size)
-{
-	int i=0,flag = 1;
-	for (i =0; i<size; i++)
-	{
-		if (ptr1[i] != rando[i])
-		{
-			flag = 0;
-			break;
-		}
-	}
-	return flag ;
 }

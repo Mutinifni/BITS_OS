@@ -2,17 +2,17 @@
 
 struct idt_entry
 {
-    unsigned short base_lo;
-    unsigned short sel;        /* Our kernel segment goes here! */
-    unsigned char always0;     /* This will ALWAYS be set to 0! */
-    unsigned char flags;       /* Set using the above table! */
-    unsigned short base_hi;
+    unsigned short base_lo;		// The lower 16 bits of the address to jump to when this interrupt fires.
+    unsigned short sel; 		/* Our kernel segment goes here! */
+    unsigned char always0;     	/* This will ALWAYS be set to 0! */
+    unsigned char flags;       	
+    unsigned short base_hi;		// The upper 16 bits of the address to jump to.
 } __attribute__((packed));
 
 struct idt_ptr
 {
     unsigned short limit;
-    unsigned int base;
+    unsigned int base;			// The address of the first element in our idt_entry_t array.
 } __attribute__((packed));
 
 struct idt_entry idt[256];

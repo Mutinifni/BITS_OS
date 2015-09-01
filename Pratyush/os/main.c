@@ -12,12 +12,12 @@ int main()
     init_video();
     print("\t\t\t\tBITS - OS\t\t") ;
     print_Time(read_rtc());     
-    print("\t\t\tWelcome to our BITS Operating System\t\t\n") ; 
-    print("\tWe have added support for US style keyboard,so you can type !\t\n");
-    print("root@cyborg:# ");    
+    print("\t\t\tWelcome to our BITS Operating System\t\t\n");
+    print("root@cyborg:# "); 
+    //print(5/0);   
     //int f = 5;
     //int k = 0;
     //print(f/k);
-    for (;;);
+    //for (;;);
     return 0;
 }
