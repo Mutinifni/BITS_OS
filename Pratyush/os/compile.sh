@@ -1,43 +1,43 @@
 echo Assembling...
-nasm -g -f elf -o start.o start.asm
+nasm -f elf -o start.o start.asm
 
 echo Compiling main.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I./include -c -o main.o main.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -I./include -c -o main.o main.c
 
 echo Compiling scrn.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/scrn.o ./include/scrn.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/scrn.o ./include/scrn.c
 
 echo Compiling memfn.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/memfn.o ./include/memfn.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/memfn.o ./include/memfn.c
 
 echo Compiling print.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/print.o ./include/print.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/print.o ./include/print.c
 
 echo Compiling gdt.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/gdt.o ./include/gdt.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/gdt.o ./include/gdt.c
 
 echo Compiling idt.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/idt.o ./include/idt.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/idt.o ./include/idt.c
 
 echo Compiling isrs.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/isrs.o ./include/isrs.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/isrs.o ./include/isrs.c
 
 echo Compiling isrs.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/irq.o ./include/irq.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/irq.o ./include/irq.c
 
 echo Compiling timer.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/timer.o ./include/timer.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/timer.o ./include/timer.c
 
 echo Compiling kb.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/kb.o ./include/kb.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/kb.o ./include/kb.c
 
 echo Compiling kbdfn.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/kbdfn.o ./include/kbdfn.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/kbdfn.o ./include/kbdfn.c
 
 echo Compiling rtc.c...
-g++ -g -march=i386 -m32 -fno-stack-protector -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/rtc.o ./include/rtc.c
+g++ -g -march=i386 -m32 -fno-stack-protector -ffreestanding -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -c -o ./include/rtc.o ./include/rtc.c
 
 echo Running linker script...
-ld -m elf_i386 -T link.ld -o kernel main.o start.o ./include/*.o -nostdlib -Map os.map  
+ld -m elf_i386 -T link.ld -o kernel.bin -nostdlib main.o start.o ./include/*.o
 
 echo Done!
