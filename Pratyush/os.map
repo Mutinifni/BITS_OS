@@ -1,0 +1,399 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000000100000                phys = 0x100000
+
+.text           0x0000000000100000     0x2000
+                0x0000000000100000                code = .
+ *(.text)
+ .text          0x0000000000100000       0xb4 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+                0x0000000000100000                gdt_set_gate(int, unsigned long, unsigned long, unsigned char, unsigned char)
+                0x0000000000100056                gdt_install()
+ .text          0x00000000001000b4       0x6f /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+                0x00000000001000b4                idt_set_gate(unsigned char, unsigned long, unsigned short, unsigned char)
+                0x00000000001000f0                idt_install()
+ .text          0x0000000000100123      0x25c /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+                0x0000000000100123                irq_install_handler(int, void (*)(regs*))
+                0x0000000000100133                irq_uninstall_handler(int)
+                0x0000000000100143                irq_remap()
+                0x00000000001001ce                irq_install()
+                0x0000000000100337                irq_handler
+ .text          0x000000000010037f      0x2f7 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+                0x000000000010037f                isrs_install()
+                0x0000000000100643                fault_handler
+ .text          0x0000000000100676      0x169 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+                0x0000000000100676                keyboard_handler(regs*)
+                0x00000000001007cc                keyboard_install()
+ .text          0x00000000001007df      0x16d /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+                0x00000000001007df                toggle_caps()
+                0x00000000001007ee                toggle_l_shift()
+                0x00000000001007fd                toggle_l_ctrl()
+                0x000000000010080c                toggle_l_alt()
+                0x000000000010081b                toggle_r_shift()
+                0x000000000010082a                toggle_r_ctrl()
+                0x0000000000100839                toggle_r_alt()
+                0x0000000000100848                s_putch(char)
+ .text          0x000000000010094c       0x8b /home/pratyush/Github/BITS_OS/Pratyush/main.o
+                0x000000000010094c                main
+ .text          0x00000000001009d7       0x8f /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+                0x00000000001009d7                memcpy(void*, void const*, int)
+                0x00000000001009fc                memset(void*, char, int)
+                0x0000000000100a1b                memsetw(unsigned short*, unsigned short, int)
+                0x0000000000100a3a                strlen(char const*)
+                0x0000000000100a56                inportb(unsigned short)
+                0x0000000000100a5c                outportb(unsigned short, unsigned char)
+ .text          0x0000000000100a66      0x28f /home/pratyush/Github/BITS_OS/Pratyush/print.o
+                0x0000000000100a66                print(int)
+                0x0000000000100ada                print(unsigned int)
+                0x0000000000100b2a                print(long)
+                0x0000000000100b9e                print(float)
+                0x0000000000100c19                print(double)
+                0x0000000000100cbe                print(char const*)
+ .text          0x0000000000100cf5      0x38e /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+                0x0000000000100cf5                print_Time(Time)
+                0x0000000000100d83                is_leap_year(unsigned int)
+                0x0000000000100da0                add_Time(Time*, Time*)
+                0x0000000000100ecc                get_update_in_progress_flag()
+                0x0000000000100eee                get_RTC_register(int)
+                0x0000000000100f0e                read_rtc()
+ .text          0x0000000000101083      0x2e6 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+                0x0000000000101083                scroll()
+                0x00000000001010f0                move_csr()
+                0x0000000000101147                cls()
+                0x00000000001011a4                putch(unsigned char)
+                0x00000000001012ac                settextcolor(unsigned char, unsigned char)
+                0x00000000001012c3                arrow_keys(char)
+                0x0000000000101353                init_video()
+ *fill*         0x0000000000101369        0x7 
+ .text          0x0000000000101370      0x20f /home/pratyush/Github/BITS_OS/Pratyush/start.o
+                0x0000000000101370                start
+                0x000000000010139f                gdt_flush
+                0x00000000001013bc                idt_load
+                0x00000000001013c4                isr0
+                0x00000000001013ce                isr1
+                0x00000000001013d8                isr2
+                0x00000000001013e2                isr3
+                0x00000000001013ec                isr4
+                0x00000000001013f6                isr5
+                0x0000000000101400                isr6
+                0x000000000010140a                isr7
+                0x0000000000101414                isr8
+                0x000000000010141c                isr9
+                0x0000000000101426                isr10
+                0x000000000010142e                isr11
+                0x0000000000101436                isr12
+                0x000000000010143e                isr13
+                0x0000000000101443                isr14
+                0x0000000000101448                isr15
+                0x000000000010144f                isr16
+                0x0000000000101456                isr17
+                0x000000000010145d                isr18
+                0x0000000000101464                isr19
+                0x000000000010146b                isr20
+                0x0000000000101472                isr21
+                0x0000000000101479                isr22
+                0x0000000000101480                isr23
+                0x0000000000101487                isr24
+                0x000000000010148e                isr25
+                0x0000000000101495                isr26
+                0x000000000010149c                isr27
+                0x00000000001014a3                isr28
+                0x00000000001014aa                isr29
+                0x00000000001014b1                isr30
+                0x00000000001014b8                isr31
+                0x00000000001014e6                irq0
+                0x00000000001014ed                irq1
+                0x00000000001014f4                irq2
+                0x00000000001014fb                irq3
+                0x0000000000101502                irq4
+                0x0000000000101509                irq5
+                0x0000000000101510                irq6
+                0x0000000000101517                irq7
+                0x000000000010151e                irq8
+                0x0000000000101525                irq9
+                0x000000000010152c                irq10
+                0x0000000000101533                irq11
+                0x000000000010153a                irq12
+                0x0000000000101541                irq13
+                0x0000000000101548                irq14
+                0x000000000010154f                irq15
+ .text          0x000000000010157f       0x2c /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+                0x000000000010157f                timer_handler(regs*)
+                0x0000000000101586                timer_wait(int)
+                0x0000000000101598                timer_install()
+ *(.rodata)
+ *fill*         0x00000000001015ab        0x1 
+ .rodata        0x00000000001015ac       0xd0 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .rodata        0x000000000010167c       0xdc /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .rodata        0x0000000000101758       0x40 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+                0x0000000000102000                . = ALIGN (0x1000)
+ *fill*         0x0000000000101798      0x868 
+
+.iplt           0x0000000000102000        0x0
+ .iplt          0x0000000000102000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+
+.eh_frame       0x0000000000102000      0xa68
+ .eh_frame      0x0000000000102000       0x80 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .eh_frame      0x0000000000102080       0x38 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+                                         0x50 (size before relaxing)
+ .eh_frame      0x00000000001020b8      0x1dc /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+                                        0x1f4 (size before relaxing)
+ .eh_frame      0x0000000000102294      0x214 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+                                        0x22c (size before relaxing)
+ .eh_frame      0x00000000001024a8       0x70 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+                                         0x88 (size before relaxing)
+ .eh_frame      0x0000000000102518       0xc8 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+                                         0xe0 (size before relaxing)
+ .eh_frame      0x00000000001025e0       0x3c /home/pratyush/Github/BITS_OS/Pratyush/main.o
+                                         0x54 (size before relaxing)
+ .eh_frame      0x000000000010261c       0x90 /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+                                         0xa8 (size before relaxing)
+ .eh_frame      0x00000000001026ac      0x138 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+                                        0x150 (size before relaxing)
+ .eh_frame      0x00000000001027e4      0x110 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+                                        0x128 (size before relaxing)
+ .eh_frame      0x00000000001028f4      0x12c /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+                                        0x144 (size before relaxing)
+ .eh_frame      0x0000000000102a20       0x48 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+                                         0x60 (size before relaxing)
+
+.rodata.str1.1  0x0000000000102a68      0x17b
+ .rodata.str1.1
+                0x0000000000102a68      0x158 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .rodata.str1.1
+                0x0000000000102bc0       0x1f /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .rodata.str1.1
+                0x0000000000102bdf        0x4 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+                                          0x6 (size before relaxing)
+
+.rodata.str1.4  0x0000000000102be4       0x2c
+ .rodata.str1.4
+                0x0000000000102be4       0x2c /home/pratyush/Github/BITS_OS/Pratyush/main.o
+                                         0x2b (size before relaxing)
+
+.rodata.cst4    0x0000000000102c10        0x8
+ .rodata.cst4   0x0000000000102c10        0x8 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+
+.rel.dyn        0x0000000000102c18        0x0
+ .rel.iplt      0x0000000000102c18        0x0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .rel.text      0x0000000000102c18        0x0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+
+.data           0x0000000000102c20      0x3e0
+                0x0000000000102c20                data = .
+ *(.data)
+ .data          0x0000000000102c20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .data          0x0000000000102c20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .data          0x0000000000102c20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .data          0x0000000000102c20       0x80 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+                0x0000000000102c20                exception_messages
+ .data          0x0000000000102ca0       0x80 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+                0x0000000000102ca0                kbdus
+ .data          0x0000000000102d20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .data          0x0000000000102d20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .data          0x0000000000102d20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .data          0x0000000000102d20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .data          0x0000000000102d20        0x0 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .data          0x0000000000102d20        0x4 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+                0x0000000000102d20                attrib
+ .data          0x0000000000102d24        0x0 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+                0x0000000000103000                . = ALIGN (0x1000)
+ *fill*         0x0000000000102d24      0x2dc 
+
+.igot.plt       0x0000000000103000        0x0
+ .igot.plt      0x0000000000103000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+
+.bss            0x0000000000103000     0x3000
+                0x0000000000103000                bss = .
+ *(.bss)
+ .bss           0x0000000000103000       0x20 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+                0x0000000000103000                gp
+                0x0000000000103008                gdt
+ .bss           0x0000000000103020      0x820 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+                0x0000000000103020                idtp
+                0x0000000000103040                idt
+ .bss           0x0000000000103840       0x40 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+                0x0000000000103840                irq_routines
+ .bss           0x0000000000103880        0x0 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .bss           0x0000000000103880        0x2 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ *fill*         0x0000000000103882        0x2 
+ .bss           0x0000000000103884        0xa /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+                0x0000000000103884                spkeys
+ .bss           0x000000000010388e        0x0 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .bss           0x000000000010388e        0x0 /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .bss           0x000000000010388e        0x0 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .bss           0x000000000010388e        0x0 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ *fill*         0x000000000010388e        0x2 
+ .bss           0x0000000000103890        0xc /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+                0x0000000000103890                csr_y
+                0x0000000000103894                csr_x
+                0x0000000000103898                textmemptr
+ .bss           0x000000000010389c     0x2000 /home/pratyush/Github/BITS_OS/Pratyush/start.o
+ .bss           0x000000000010589c        0x4 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+                0x000000000010589c                timer_ticks
+                0x0000000000106000                . = ALIGN (0x1000)
+ *fill*         0x00000000001058a0      0x760 
+                0x0000000000106000                end = .
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/main.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/print.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/start.o
+LOAD /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+OUTPUT(kernel.bin elf32-i386)
+
+.debug_info     0x0000000000000000     0x1ae4
+ .debug_info    0x0000000000000000      0x1a4 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .debug_info    0x00000000000001a4      0x188 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .debug_info    0x000000000000032c      0x349 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .debug_info    0x0000000000000675      0x2ee /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .debug_info    0x0000000000000963      0x30b /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .debug_info    0x0000000000000c6e      0x138 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .debug_info    0x0000000000000da6      0x157 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .debug_info    0x0000000000000efd      0x22f /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .debug_info    0x000000000000112c      0x244 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .debug_info    0x0000000000001370      0x31f /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .debug_info    0x000000000000168f      0x28d /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .debug_info    0x000000000000191c      0x1c8 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+
+.debug_abbrev   0x0000000000000000      0x9e8
+ .debug_abbrev  0x0000000000000000       0xbf /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .debug_abbrev  0x00000000000000bf       0xdf /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .debug_abbrev  0x000000000000019e      0x113 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .debug_abbrev  0x00000000000002b1       0xe7 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .debug_abbrev  0x0000000000000398       0xd7 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .debug_abbrev  0x000000000000046f       0xaa /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .debug_abbrev  0x0000000000000519       0x62 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .debug_abbrev  0x000000000000057b       0xee /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .debug_abbrev  0x0000000000000669       0xc6 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .debug_abbrev  0x000000000000072f      0x115 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .debug_abbrev  0x0000000000000844       0xd0 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .debug_abbrev  0x0000000000000914       0xd4 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+
+.debug_aranges  0x0000000000000000      0x180
+ .debug_aranges
+                0x0000000000000000       0x20 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .debug_aranges
+                0x0000000000000020       0x20 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .debug_aranges
+                0x0000000000000040       0x20 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .debug_aranges
+                0x0000000000000060       0x20 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .debug_aranges
+                0x0000000000000080       0x20 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .debug_aranges
+                0x00000000000000a0       0x20 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .debug_aranges
+                0x00000000000000c0       0x20 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .debug_aranges
+                0x00000000000000e0       0x20 /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .debug_aranges
+                0x0000000000000100       0x20 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .debug_aranges
+                0x0000000000000120       0x20 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .debug_aranges
+                0x0000000000000140       0x20 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .debug_aranges
+                0x0000000000000160       0x20 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+
+.debug_line     0x0000000000000000      0x7f4
+ .debug_line    0x0000000000000000       0x76 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .debug_line    0x0000000000000076       0x7c /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .debug_line    0x00000000000000f2       0xaf /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .debug_line    0x00000000000001a1       0xba /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .debug_line    0x000000000000025b       0x9f /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .debug_line    0x00000000000002fa       0xc0 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .debug_line    0x00000000000003ba       0x7f /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .debug_line    0x0000000000000439       0x9d /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .debug_line    0x00000000000004d6       0xd0 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .debug_line    0x00000000000005a6       0xde /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .debug_line    0x0000000000000684       0xf5 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .debug_line    0x0000000000000779       0x7b /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+
+.debug_str      0x0000000000000000      0xa4d
+ .debug_str     0x0000000000000000      0x1a0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+                                        0x1ad (size before relaxing)
+ .debug_str     0x00000000000001a0       0xc1 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+                                        0x1a2 (size before relaxing)
+ .debug_str     0x0000000000000261      0x121 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+                                        0x1fb (size before relaxing)
+ .debug_str     0x0000000000000382       0x88 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+                                        0x17e (size before relaxing)
+ .debug_str     0x000000000000040a      0x1bc /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+                                        0x2c7 (size before relaxing)
+ .debug_str     0x00000000000005c6       0x48 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+                                        0x1f5 (size before relaxing)
+ .debug_str     0x000000000000060e       0xa4 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+                                        0x1f5 (size before relaxing)
+ .debug_str     0x00000000000006b2       0x9d /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+                                        0x19d (size before relaxing)
+ .debug_str     0x000000000000074f       0x8a /home/pratyush/Github/BITS_OS/Pratyush/print.o
+                                        0x167 (size before relaxing)
+ .debug_str     0x00000000000007d9      0x125 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+                                        0x257 (size before relaxing)
+ .debug_str     0x00000000000008fe       0xc4 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+                                        0x20e (size before relaxing)
+ .debug_str     0x00000000000009c2       0x8b /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+                                        0x1af (size before relaxing)
+
+.comment        0x0000000000000000       0x2d
+ .comment       0x0000000000000000       0x2d /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+                                         0x2e (size before relaxing)
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .comment       0x000000000000002d       0x2e /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+
+.note.GNU-stack
+                0x0000000000000000        0x0
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/gdt.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/idt.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/isrs.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/kb.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/main.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /home/pratyush/Github/BITS_OS/Pratyush/timer.o
+
+.debug_loc      0x0000000000000000      0x782
+ .debug_loc     0x0000000000000000       0x13 /home/pratyush/Github/BITS_OS/Pratyush/irq.o
+ .debug_loc     0x0000000000000013      0x144 /home/pratyush/Github/BITS_OS/Pratyush/kbdfn.o
+ .debug_loc     0x0000000000000157      0x214 /home/pratyush/Github/BITS_OS/Pratyush/memfn.o
+ .debug_loc     0x000000000000036b      0x1a8 /home/pratyush/Github/BITS_OS/Pratyush/print.o
+ .debug_loc     0x0000000000000513      0x145 /home/pratyush/Github/BITS_OS/Pratyush/rtc.o
+ .debug_loc     0x0000000000000658      0x106 /home/pratyush/Github/BITS_OS/Pratyush/scrn.o
+ .debug_loc     0x000000000000075e       0x24 /home/pratyush/Github/BITS_OS/Pratyush/timer.o

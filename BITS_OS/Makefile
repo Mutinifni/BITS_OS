@@ -10,7 +10,7 @@ REDIRECT = > /dev/null 2>&1
 sys_obj = proc_asm.o $(lib_dir)/proc_c.o kernel_asm.o kernel.o $(lib_dir)/io.o $(lib_dir)/string.o $(lib_dir)/idt.o $(lib_dir)/exception.o  
 all: $(target) 
 	ld -m elf_i386  -t $(script) -o kernel $(sys_obj) -nostdlib -Map os.map
-	qemu-system-i386 -s -kernel kernel.bin 
+	qemu-system-i386 -s -S -kernel kernel.bin 
 
 proc_asm.o: processor.asm 
 	nasm -g -f elf processor.asm -o proc_asm.o 
